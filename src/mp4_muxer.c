@@ -1553,7 +1553,10 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
     /** Sample Entry */
     SKIP_SIZE_FIELD(snk);
 
-    if (track->parser->ext_timing.ext_dv_profile == 5)
+    if (
+        (track->parser->ext_timing.ext_dv_profile == 5)
+        || ((track->parser->dv_rpu_nal_flag == 1) && (track->parser->dv_el_nal_flag == 0))  /** non-bc compatible single layer, single track; or dual layer dual track, EL track case; */
+        )
     {
         dolby_vision_flag = 1;
     }
