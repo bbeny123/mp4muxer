@@ -36,7 +36,7 @@
 
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
 
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 
@@ -144,7 +144,7 @@ sample_subs_t;
 
 #ifdef ENABLE_MP4_ENCRYPTION
 /** Storage for encrypted sub sample information. */
-typedef 
+typedef
 struct enc_subsample_info_t_
 {
     enc_sample_info_t enc_info;
@@ -160,7 +160,7 @@ get_codingname(parser_handle_t parser)
 
     switch (parser->stream_id)
     {
-    case STREAM_ID_HEVC: codingname = "hvc1"; break; 
+    case STREAM_ID_HEVC: codingname = "hvc1"; break;
     case STREAM_ID_H264: codingname = "avc1"; break;
     case STREAM_ID_H263: codingname = "s263"; break;
     case STREAM_ID_MP4V: codingname = "mp4v"; break;
@@ -545,7 +545,7 @@ write_sdtp_box(bbio_handle_t snk, track_handle_t track)
 /**
  * @brief Writes Sub-Sample Information Box
  * see [ISO] Section 8.7.7 and [CFF] Section 6.6.1.6
- * 
+ *
  * Function assumes that the 'subs' box is used only for subtitle tracks.
  */
 static int32_t
@@ -648,7 +648,7 @@ write_saio_box(bbio_handle_t snk, track_handle_t track)
         }
     }
     sink_write_u32(snk, 1); /** entry_count */
-    /** offset from 'moof' to 1st entry in 'senc': 
+    /** offset from 'moof' to 1st entry in 'senc':
         + 4     (offset in 'saio')
         + 12    (full box 'senc')
         + 4     (sample_count in 'senc') */
@@ -1091,7 +1091,7 @@ write_iods_box(bbio_handle_t snk, mp4_ctrl_handle_t muxer)
             total_ES_ID_Inc_size += 6;
         }
     }
-    if (!total_ES_ID_Inc_size) 
+    if (!total_ES_ID_Inc_size)
     {
         return 0;
     }
@@ -1258,15 +1258,15 @@ write_frma_box(bbio_handle_t snk, track_handle_t track)
 
     /** sample entry name should be */
     if (
-        (track->parser->ext_timing.ext_dv_profile == 1)                                     /** non-bc dual layer, dual track */ 
-        || (track->parser->ext_timing.ext_dv_profile == 3)                                  /**  non-bc dual layer, dual track */ 
+        (track->parser->ext_timing.ext_dv_profile == 1)                                     /** non-bc dual layer, dual track */
+        || (track->parser->ext_timing.ext_dv_profile == 3)                                  /**  non-bc dual layer, dual track */
         || ((track->parser->dv_rpu_nal_flag == 1) && (track->parser->dv_el_nal_flag == 0))  /** non-bc single layer,single track; dual layer, EL track */
         )
     {
         if (IS_FOURCC_EQUAL(track->parser->dsi_FourCC, "avcC"))
             codingname = "dvav";
         else if (IS_FOURCC_EQUAL(track->parser->dsi_FourCC, "hvcC"))
-            codingname = "dvhe";    
+            codingname = "dvhe";
     }
 
     sink_write_4CC(snk, codingname);
@@ -1322,7 +1322,7 @@ write_tenc_box(bbio_handle_t snk, track_handle_t track)
     sink_write_u32(snk, 0);     /** version & flags */
 
     default_AlgorithmID = 1;    /** 0: none, 1: AES-CTR */
-    default_IV_size     = (track->encryptor->iv_size >> 3);     /** 8/16: 64/128 bit initialization vectors */ 
+    default_IV_size     = (track->encryptor->iv_size >> 3);     /** 8/16: 64/128 bit initialization vectors */
 
     sink_write_bits(snk, 24, default_AlgorithmID);
     sink_write_bits(snk,  8, default_IV_size);
@@ -1363,7 +1363,7 @@ write_dsi_box(bbio_handle_t snk, track_handle_t track)
     sink_write_u32(snk, size);
     snk->write(snk, (uint8_t *)track->parser->dsi_FourCC, 4);
     snk->write(snk, (uint8_t *)track->dsi_buf, track->dsi_size);
-    
+
     /** add dolby vision dsi */
     if (IS_FOURCC_EQUAL(track->parser->dsi_FourCC, "avcC") || (IS_FOURCC_EQUAL(track->parser->dsi_FourCC, "hvcC")))
     {
@@ -1424,10 +1424,10 @@ write_dv_dsi_box(bbio_handle_t snk, track_handle_t track)
     uint32_t size = (uint32_t)track->parser->dv_dsi_size + 8;
     sink_write_u32(snk, size);
     sink_write_4CC(snk, "dvcC");
-    
+
     snk->write(snk, (uint8_t *)track->parser->dv_dsi_buf, track->parser->dv_dsi_size);
-    
-    return size ; 
+
+    return size ;
 }
 
 static uint32_t
@@ -1548,7 +1548,7 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
     int8_t* codingname   = (track->encryptor) ? "encv" : track->codingname;
     parser_video_handle_t parser_video = (parser_video_handle_t)track->parser;
     int8_t compressor_name[32];
-    int32_t dolby_vision_flag = 0;               
+    int32_t dolby_vision_flag = 0;
 
     /** Sample Entry */
     SKIP_SIZE_FIELD(snk);
@@ -1570,7 +1570,7 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
 
                 codingname = "dva1";
 
-            } 
+            }
 
             else
 
@@ -1586,13 +1586,13 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
             if(IS_FOURCC_EQUAL(codingname, "hev1"))
             {
                 codingname = "dvhe";
-            } 
+            }
             else if (IS_FOURCC_EQUAL(codingname, "hvc1"))
             {
                 codingname = "dvh1";
             }
         }
-        
+
 
         memcpy(track->codingname, codingname, 4);
 
@@ -1629,7 +1629,7 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
     {
         memcpy(compressor_name, "\013DOVI Coding", 13);
     }
-    
+
     snk->write(snk, (uint8_t *)compressor_name, 32);
 
     sink_write_u16(snk, 0x18);     /** depth = 0x18 */
@@ -2567,7 +2567,7 @@ write_tkhd_box(bbio_handle_t snk, track_handle_t track)
     }
     else
     {
-        sink_write_u16(snk, 0x0);            /** reserved (Layer) */    
+        sink_write_u16(snk, 0x0);            /** reserved (Layer) */
     }
      /** Alternate group is an integer that specifies a group or collection of tracks. If this field is 0 there is no
         information on possible relations to other tracks. If this field is not 0, it should be the same for tracks
@@ -2575,7 +2575,7 @@ write_tkhd_box(bbio_handle_t snk, track_handle_t track)
         Only one track within an alternate group should be played or streamed at any one time, and must be
         distinguishable from other tracks in the group via attributes such as bitrate, codec, language, packet
         size etc. A group may have only one member.*/
-    sink_write_u16(snk, (uint16_t)(track->alternate_group));      
+    sink_write_u16(snk, (uint16_t)(track->alternate_group));
     /** volume, only for audio */
     if (track->parser->stream_type == STREAM_TYPE_AUDIO)
     {
@@ -2672,7 +2672,7 @@ write_vdep_box(bbio_handle_t snk, track_handle_t track)
     SKIP_SIZE_FIELD(snk);
     sink_write_4CC(snk, "vdep"); /** reference type */
     /** For DoVi, we assume BL track id = EL track id - 1  */
-    sink_write_u32(snk, track->track_ID - 1); 
+    sink_write_u32(snk, track->track_ID - 1);
     WRITE_SIZE_FIELD_RETURN(snk);
 }
 
@@ -2732,8 +2732,8 @@ write_trak_box(bbio_handle_t snk, track_handle_t track, uint32_t tref_flag, uint
         write_tref_box(snk, track);
         write_udta_track_box(snk, track);
     }
-    if (tref_flag && (track->parser->dv_el_nal_flag == 0) 
-        && (track->parser->dv_rpu_nal_flag == 1) 
+    if (tref_flag && (track->parser->dv_el_nal_flag == 0)
+        && (track->parser->dv_rpu_nal_flag == 1)
         && (track->parser->ext_timing.ext_dv_profile != 5)
         && (track->parser->ext_timing.ext_dv_profile != 8)
         && (track->track_ID > 1))
@@ -2817,10 +2817,10 @@ trex_get_sample_flag(track_t *track)
     while (num--)
     {
         sdtp = list_it_get_entry(track->sdtp_lst);
-        sample_flag_val = (((sdtp->is_leading & 0x3) << 26) | 
-                          ((sdtp->sample_depends_on & 0x3) << 24) | 
-                          ((sdtp->sample_is_depended_on & 0x3) << 22) | 
-                          ((sdtp->sample_has_redundancy & 0x3) << 20) | 
+        sample_flag_val = (((sdtp->is_leading & 0x3) << 26) |
+                          ((sdtp->sample_depends_on & 0x3) << 24) |
+                          ((sdtp->sample_is_depended_on & 0x3) << 22) |
+                          ((sdtp->sample_has_redundancy & 0x3) << 20) |
                           ((sdtp->sample_is_non_sync_sample & 0x1)<<16));
         if(list_get_entry_num(value_freq_lst) == 0)
         {
@@ -3122,9 +3122,9 @@ get_moof_ccff(mp4_ctrl_handle_t muxer)
             track_handle_t *e;
             while ((e = list_it_get_entry(muxer->next_track_lst)))
             {
-                if(IS_FOURCC_EQUAL(muxer->usr_cfg_mux_ref->major_brand, "ccff")) 
+                if(IS_FOURCC_EQUAL(muxer->usr_cfg_mux_ref->major_brand, "ccff"))
                 {
-                    if ((*e)->frag_size < (*trk_entry)->frag_size) 
+                    if ((*e)->frag_size < (*trk_entry)->frag_size)
                     {
                         trk_entry = e;
                     }
@@ -3209,9 +3209,9 @@ get_moof_ccff_per_track(mp4_ctrl_handle_t muxer, uint32_t index)
             track_handle_t *e;
             while ((e = list_it_get_entry(muxer->next_track_lst)))
             {
-                if(IS_FOURCC_EQUAL(muxer->usr_cfg_mux_ref->major_brand, "ccff")) 
+                if(IS_FOURCC_EQUAL(muxer->usr_cfg_mux_ref->major_brand, "ccff"))
                 {
-                    if ((*e)->frag_size < (*trk_entry)->frag_size) 
+                    if ((*e)->frag_size < (*trk_entry)->frag_size)
                     {
                         trk_entry = e;
                     }
@@ -3386,8 +3386,8 @@ update_frag_index_lst(list_handle_t lst,
  *  For the input ES, we have the following assumptions:
  *  1) The first sample in a fragment must be sync sample
  *  2) The first sample referenced by stsd must be sync sample
- * 
- *  After calling this function successfully, we can get the fragment 
+ *
+ *  After calling this function successfully, we can get the fragment
  *  number and each fragment's start/end sample index
  *
  */
@@ -3416,19 +3416,19 @@ create_fragment_lst(mp4_ctrl_handle_t muxer, uint32_t first_sample_is_sync)
 
     for (track_idx = 0; track_idx < muxer->stream_num; track_idx++)
     {
-        track = muxer->tracks[track_idx];    
+        track = muxer->tracks[track_idx];
         frag_range_max_s    = rescale_u64(muxer->usr_cfg_mux_ref->frag_range_max, track->media_timescale, 1000);
         frag_range_min_s    = rescale_u64(muxer->usr_cfg_mux_ref->frag_range_min, track->media_timescale, 1000);
         one_sample_per_frag = (IS_FOURCC_EQUAL(track->codingname, "stpp")) ? 1 : 0;
         frag_dts            = track->frag_dts;
         frag_duration       = track->frag_duration;
-        
+
         if ((frag_range_max_s <= frag_range_min_s) || (frag_range_max_s <= 0))
         {
             msglog(NULL, MSGLOG_ERR, "\nError: max/min fragment duration setting error! \n");
             return -1;
         }
-        
+
         while(frag_dts < track->media_duration)
         {
             /** initialize */
@@ -3442,7 +3442,7 @@ create_fragment_lst(mp4_ctrl_handle_t muxer, uint32_t first_sample_is_sync)
             if (!dts_id_1st)
             {
                 /** no sample left in this track*/
-                break; 
+                break;
             }
 
             list_it_save_mark(track->dts_lst);
@@ -3501,7 +3501,7 @@ create_fragment_lst(mp4_ctrl_handle_t muxer, uint32_t first_sample_is_sync)
                     }
                     list_it_goto_mark(track->sync_lst);
                 }
-                
+
                 if (dts_id == NULL)
                 {
                     if (track->media_duration < dts_max)
@@ -3563,7 +3563,7 @@ create_fragment_lst(mp4_ctrl_handle_t muxer, uint32_t first_sample_is_sync)
             update_frag_index_lst(track->segment_lst, idx_start, idx_stop);
             frag_dts      = dts;
         }
-        
+
         track->sidx_reference_count = (uint16_t)list_get_entry_num(track->segment_lst);
         /** restore the dts and sync list */
         list_it_init(track->dts_lst);
@@ -3609,7 +3609,7 @@ get_tfhd(track_handle_t track)
     idx_1st = dts_id->idx; /** first sample idx in trun */
     idx_max = get_min_sample_idx_nlt_dts(track->dts_lst, track->frag_dts);
     sample_count = idx_max - idx_1st;
-    
+
     /** build tf_flags and tfhd */
     ptfhd->tf_flags = ptfhd->tf_flags_override;
     if (track->mp4_ctrl->usr_cfg_mux_ref->frag_cfg_flags & ISOM_FRAGCFG_EMPTY_TREX)
@@ -3645,25 +3645,25 @@ get_tfhd(track_handle_t track)
             ptfhd->tf_flags |= TF_FLAGS_DEFAULT_SAMPLE_DURATION;
             ptfhd->default_sample_duration = ptrex->default_sample_duration;
         }
-        
+
         ptfhd->samples_same_mode = SAMPLE_FLAG_IS_DIFFERENT;
         /** save the current list item */
         list_it_save_mark(track->sdtp_lst);
         /** store the first sample flag in the fragment. */
         sdtp = list_it_get_entry(track->sdtp_lst);
-        sdtp_first_val =    (((sdtp->is_leading & 0x3) << 26) | 
-                            ((sdtp->sample_depends_on & 0x3) << 24) | 
-                            ((sdtp->sample_is_depended_on & 0x3) << 22) | 
-                            ((sdtp->sample_has_redundancy & 0x3) << 20) | 
+        sdtp_first_val =    (((sdtp->is_leading & 0x3) << 26) |
+                            ((sdtp->sample_depends_on & 0x3) << 24) |
+                            ((sdtp->sample_is_depended_on & 0x3) << 22) |
+                            ((sdtp->sample_has_redundancy & 0x3) << 20) |
                             ((sdtp->sample_is_non_sync_sample & 0x1)<<16));
         /** check the samples(except 1st sample) has the same mode or not */
-        while(sample_num--) 
+        while(sample_num--)
         {
             sdtp = list_it_get_entry(track->sdtp_lst);
-            sdtp_cur_val = (((sdtp->is_leading & 0x3) << 26) | 
-                            ((sdtp->sample_depends_on & 0x3) << 24) | 
-                            ((sdtp->sample_is_depended_on & 0x3) << 22) | 
-                            ((sdtp->sample_has_redundancy & 0x3) << 20) | 
+            sdtp_cur_val = (((sdtp->is_leading & 0x3) << 26) |
+                            ((sdtp->sample_depends_on & 0x3) << 24) |
+                            ((sdtp->sample_is_depended_on & 0x3) << 22) |
+                            ((sdtp->sample_has_redundancy & 0x3) << 20) |
                             ((sdtp->sample_is_non_sync_sample & 0x1)<<16));
             if ((sdtp_cur_val != sdtp_last_val) && (sdtp_last_val != -1))
             {
@@ -3768,8 +3768,8 @@ get_trun(track_handle_t track)
     if (track->traf_is_prepared)
     {
         sample_count = idx_max - idx_1st;
-        if (!(track->mp4_ctrl->usr_cfg_mux_ref->frag_cfg_flags & ISOM_FRAGCFG_WRITE_SDTP) && 
-            list_get_entry_num(track->sdtp_lst)) 
+        if (!(track->mp4_ctrl->usr_cfg_mux_ref->frag_cfg_flags & ISOM_FRAGCFG_WRITE_SDTP) &&
+            list_get_entry_num(track->sdtp_lst))
         {
             /** If the samples except the first one have the same mode in the fragment, and the first sample's flag doesn't equal the followings' flag */
             if(track->tfhd.samples_same_mode == SAMPLE_FLAG_IS_SAME_EXCEPT_FIRST)
@@ -4065,10 +4065,10 @@ write_trun_box(bbio_handle_t snk, track_handle_t track)
         entry = (sample_sdtp_t *)list_it_peek_entry(track->sdtp_lst);
         if (entry)
         {
-            ptrun->first_sample_flags =    (((entry->is_leading & 0x3) << 26) | 
-                                        ((entry->sample_depends_on & 0x3) << 24) | 
-                                        ((entry->sample_is_depended_on & 0x3) << 22) | 
-                                        ((entry->sample_has_redundancy & 0x3) << 20) | 
+            ptrun->first_sample_flags =    (((entry->is_leading & 0x3) << 26) |
+                                        ((entry->sample_depends_on & 0x3) << 24) |
+                                        ((entry->sample_is_depended_on & 0x3) << 22) |
+                                        ((entry->sample_has_redundancy & 0x3) << 20) |
                                         ((entry->sample_is_non_sync_sample & 0x1)<<16));
         }
         sink_write_u32(snk, ptrun->first_sample_flags);
@@ -4433,7 +4433,7 @@ write_chunk(track_handle_t track, chunk_handle_t chunk, bbio_handle_t snk);
 /** Writes 'mdat' of 'moof', returns: error code */
 static int32_t
 write_mdat_box_frag(bbio_handle_t      snk,
-                    mp4_ctrl_handle_t  muxer, 
+                    mp4_ctrl_handle_t  muxer,
                     uint32_t           track_ID_requested,
                     int32_t               *bytes_written)
 {
@@ -4694,7 +4694,7 @@ write_moov_box(bbio_handle_t snk, mp4_ctrl_handle_t muxer)
                 if ((aac_flag) && (IS_FOURCC_EQUAL(track->codingname, "ec-3")))
                 {
                     write_trak_box(snk, track, 1, 0x6);
-                } 
+                }
                 else
                 {
                     write_trak_box(snk, track, 1, 0x7);
@@ -4785,7 +4785,7 @@ update_subs_lst(list_handle_t lst,
     if (num_subsamples <= 1)
     {
         /** Mark empty subsamples entry */
-        sample_subs = (sample_subs_t *)list_alloc_entry(lst);        
+        sample_subs = (sample_subs_t *)list_alloc_entry(lst);
         sample_subs->subsample_size = 0;
         sample_subs->num_subs_left  = 0;
         list_add_entry(lst, sample_subs);
@@ -4793,7 +4793,7 @@ update_subs_lst(list_handle_t lst,
     }
     for (i = 0; i < num_subsamples; ++i)
     {
-        sample_subs = (sample_subs_t *)list_alloc_entry(lst);        
+        sample_subs = (sample_subs_t *)list_alloc_entry(lst);
         sample_subs->subsample_size = subsample_sizes[i];
         sample_subs->num_subs_left = num_subsamples - 1 - i;
         list_add_entry(lst, sample_subs);
@@ -5173,7 +5173,7 @@ mp4_muxer_input_sample (track_handle_t      htrack
             htrack->media_timescale = parser->time_scale;
         }
 
-        if (!htrack->media_timescale) 
+        if (!htrack->media_timescale)
         {
             return EMA_MP4_MUXED_OK; /** parser should have the right value*/
         }
@@ -5184,7 +5184,7 @@ mp4_muxer_input_sample (track_handle_t      htrack
             htrack->media_timescale       = htrack->warp_media_timescale;
         }
 
-        if (htrack->mp4_ctrl->usr_cfg_mux_ref->chunk_span_time) 
+        if (htrack->mp4_ctrl->usr_cfg_mux_ref->chunk_span_time)
         {
             /** ms => media_timescale */
             htrack->chunk_span_time =
@@ -5273,7 +5273,7 @@ mp4_muxer_input_sample (track_handle_t      htrack
 
     /** update timing info */
     /** update rap table */
-    if ((hsample->flags & SAMPLE_SYNC)) 
+    if ((hsample->flags & SAMPLE_SYNC))
     {
         update_idx_dts_lst(htrack->sync_lst, htrack->sample_num, hsample->dts);
     }
@@ -5301,7 +5301,7 @@ mp4_muxer_input_sample (track_handle_t      htrack
     count_value_lst_update(htrack->cts_offset_lst, hsample->cts - hsample->dts - htrack->cts_offset_v1_base);
     htrack->media_duration = hsample->dts + hsample->duration -
         ((idx_dts_t*)list_peek_first_entry(htrack->dts_lst))->dts;
-    
+
     /** 'stsd', 'dref' and chunk */
     chunk_update(htrack, hsample); /** still use it for 'stsd' and 'dref' update */
 
@@ -5512,7 +5512,7 @@ calculate_bitrate(track_handle_t track)
 
     if (parser->stream_id == STREAM_ID_AAC)
     {
-        /** calculates filter length for 1 second of audio 
+        /** calculates filter length for 1 second of audio
             calculations are based on core aac decoder with 1024 samples per frame */
         bitrate_filter_len = (track->media_timescale + 1023) / 1024;
     }
@@ -5799,7 +5799,7 @@ setup_muxer(mp4_ctrl_handle_t muxer)
         {
             /** The track structure might not have been initialized by mp4_muxer_add_track(),
                but created somewhere externally (by the demuxer). Therefore, initialize
-               data as needed. 
+               data as needed.
             */
             track->enc_info_lst = list_create(sizeof(enc_subsample_info_t));
         }
@@ -6360,7 +6360,7 @@ write_ssix_box(bbio_handle_t snk, track_handle_t track)
 
     sink_write_u32(snk, 0);                           /** version, flags */
     sink_write_u32(snk, track->sidx_reference_count); /** subsegment_count */
-    
+
     it_init(it, track->size_lst);
     list_it_init(track->frame_type_lst);
     list_it_save_mark(track->segment_lst);
@@ -6384,8 +6384,8 @@ write_ssix_box(bbio_handle_t snk, track_handle_t track)
 
         /** Currently ranges_count is 0, we'll update it when we know it's real value.
           * Based on ISO/IEC 14496-12 2012 8.16.4.2: ranges_count should be 32 bit. */
-        sink_write_u32(snk, 0); 
-    
+        sink_write_u32(snk, 0);
+
         entry_cur = (sample_frame_type_t *)list_it_get_entry(track->frame_type_lst);
 
         if(sample_count == 1)
@@ -6398,7 +6398,7 @@ write_ssix_box(bbio_handle_t snk, track_handle_t track)
             }
             sample_count = cv->count;
         }
-        else 
+        else
         {
             sample_count --;
         }
@@ -6419,7 +6419,7 @@ write_ssix_box(bbio_handle_t snk, track_handle_t track)
                     }
                     sample_count = cv->count;
                 }
-                else 
+                else
                 {
                     sample_count --;
                 }
@@ -6432,11 +6432,11 @@ write_ssix_box(bbio_handle_t snk, track_handle_t track)
                 if (j == (segment_sample_count - 1))
                 {
                     sink_write_u8(snk, entry_cur->frame_type);
-                    sink_write_bits(snk, 24, range_size); 
+                    sink_write_bits(snk, 24, range_size);
                     ranges_count++;
                 }
             }
-            else 
+            else
             {
                 assert(entry_cur != NULL);
                 sink_write_u8(snk, entry_cur->frame_type);
@@ -6585,7 +6585,7 @@ mp4_muxer_output_tracks(mp4_ctrl_handle_t muxer)
         while ((track_ID = get_moof_ccff(muxer)))
         {
             offset_t moof_offset;
-            
+
             int32_t      bytes_written;
 
             if (muxer->onwrite_next_frag_cb != NULL)
@@ -6635,7 +6635,7 @@ mp4_muxer_output_tracks(mp4_ctrl_handle_t muxer)
 
             msglog(NULL, MSGLOG_INFO, "    seq#: %u\n", muxer->sequence_number);
             muxer->sequence_number++;
-            
+
         }
 
         /** [ISO] Section 8.11.1: Meta Box; [CFF] DECE Optional Metadata */
@@ -6667,7 +6667,7 @@ mp4_muxer_output_tracks(mp4_ctrl_handle_t muxer)
 
         uint32_t track_index = 0;
         uint32_t fragment_number = 0;
-        
+
         for(track_index = 0; track_index <muxer->stream_num; track_index++)
         {
             if (!fragment_number)
@@ -6682,7 +6682,7 @@ mp4_muxer_output_tracks(mp4_ctrl_handle_t muxer)
                 }
             }
         }
-    
+
         while (fragment_number)
         {
             for(track_index = 0; track_index <muxer->stream_num; track_index++)
@@ -6722,7 +6722,7 @@ mp4_muxer_output_tracks(mp4_ctrl_handle_t muxer)
                             update_sidx_box_offset(snk, sidx_pos[track_index], sidx_size[track_index], moof_offset);
                             sidx_first_offset_written[track_index] = 1;
                         }
-                        update_sidx_box(snk, muxer->tracks[track_index], sidx_pos[track_index], sidx_size[track_index], referenced_size);       
+                        update_sidx_box(snk, muxer->tracks[track_index], sidx_pos[track_index], sidx_size[track_index], referenced_size);
                     }
 
                     if (muxer->progress_cb != NULL)
@@ -7051,7 +7051,7 @@ mp4_muxer_add_track (mp4_ctrl_handle_t  hmuxer
     track->flags = p_usr_cfg_es->force_tkhd_flags;
     FOURCC_ASSIGN(track->codingname, codingname);
 
-    if (IS_FOURCC_EQUAL(codingname,"hvc1")) 
+    if (IS_FOURCC_EQUAL(codingname,"hvc1"))
     {
         if (p_usr_cfg_es->sample_entry_name && IS_FOURCC_EQUAL(p_usr_cfg_es->sample_entry_name, "hvc1"))
         {
@@ -7536,7 +7536,7 @@ mp4_muxer_encrypt_track (track_handle_t         htrack
 
 			 || (IS_FOURCC_EQUAL(codingname,"avc3"))
 
-			 || (IS_FOURCC_EQUAL(htrack->codingname, "hvc1")) 
+			 || (IS_FOURCC_EQUAL(htrack->codingname, "hvc1"))
 
 			 || (IS_FOURCC_EQUAL(htrack->codingname, "hev1")))
             {
@@ -7571,4 +7571,3 @@ mp4base_get_version (void)
 {
     return &mp4base_lib_version;
 }
-
