@@ -39,10 +39,8 @@ For Windows platform development, Visual Studio 2010 must be installed with SP1.
     https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2022
 
     From a cmd execute:
-    "msbuild make\mp4muxer\<architecture>\mp4muxer_2010.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
-
-    Example command (windows_amd64):
-    "msbuild make\mp4muxer\windows_amd64\mp4muxer_2010.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
+    - for windows_amd64 build: "msbuild make\mp4muxer\windows_amd64\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
+    - for windows_x86 build: "msbuild make\mp4muxer\windows_x86\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
 
 ## Release Notes
 
