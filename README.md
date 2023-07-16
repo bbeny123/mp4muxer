@@ -35,10 +35,14 @@ For Windows platform development, Visual Studio 2010 must be installed with SP1.
 
 #### Using the Visual Studio Solutions(on Windows)
 
-    From a Visual Studio 2010 command line window:
-    Go to a directory of your choice
-    "cd dlb_mp4base\make\mp4muxer\mp4muxer<architecture>"
-    "devenv mp4muxer_2010.sln /rebuild debug/release"
+    Install msbuild:
+    https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2022
+
+    From a cmd execute:
+    "msbuild make\mp4muxer\<architecture>\mp4muxer_2010.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
+
+    Example command (windows_amd64):
+    "msbuild make\mp4muxer\windows_amd64\mp4muxer_2010.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
 
 ## Release Notes
 
@@ -47,5 +51,3 @@ See the [Release Notes](ReleaseNotes.md) file for details
 ## License
 
 This project is licensed under the BSD-3 License - see the [LICENSE](LICENSE) file for details
-
-
