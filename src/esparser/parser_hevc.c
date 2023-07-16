@@ -1715,7 +1715,7 @@ parser_hevc_get_cts_offset(parser_handle_t parser, uint32_t sample_idx)
 
     it_list_handle_t   it  = it_create();
     parser_hevc_handle_t parser_hevc = (parser_hevc_handle_t)parser;
-    
+
     if(sample_idx == 0)
     {
 
@@ -1724,7 +1724,7 @@ parser_hevc_get_cts_offset(parser_handle_t parser, uint32_t sample_idx)
         {
             if((int32_t)cv->value < ctts_offset)
                 ctts_offset = (int32_t)cv->value;
-            
+
         }
         it_destroy(it);
         return (-ctts_offset);
