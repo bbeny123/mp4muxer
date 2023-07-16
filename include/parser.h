@@ -17,7 +17,7 @@
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ************************************************************************************************************/
@@ -430,9 +430,9 @@ typedef struct ext_timing_info_t_
 typedef struct codec_config_t_
 {
     size_t codec_config_size;
-    void * codec_config_data; 
+    void * codec_config_data;
 } codec_config_t;
-  
+
 
 #define PARSER_BASE                                                                                                         \
     uint32_t        stream_type;      /** defined as STREAM_TYPE_...: AUDIO, VIDEO etc. */                                  \
@@ -541,7 +541,7 @@ struct parser_t_
     uint32_t framerate;                     \
     uint8_t colour_primaries;               \
     uint8_t transfer_characteristics;       \
-    uint8_t matrix_coefficients           
+    uint8_t matrix_coefficients
 
 typedef struct parser_video_t_
 {

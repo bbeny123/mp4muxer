@@ -81,7 +81,7 @@
 #define TRACK_EDIT_ACTION_REPLACE       3
 
 /* sample entry name configure */
-#define ISOM_MUXCFG_HEVC_SAMPLE_ENTRY_MASK  (0xff) 
+#define ISOM_MUXCFG_HEVC_SAMPLE_ENTRY_MASK  (0xff)
 #define ISOM_MUXCFG_HEVC_SAMPLE_ENTRY_HEV1  0 /**< 0: "hev1" */
 #define ISOM_MUXCFG_HEVC_SAMPLE_ENTRY_HVC1  1 /**< 1: "hvc1" */
 
@@ -98,8 +98,8 @@ extern "C"
 {
 #endif
 
-/** 
- * @brief output file format type 
+/**
+ * @brief output file format type
  */
 enum OutputFormat
 {
@@ -114,7 +114,7 @@ enum OutputFormat
 
 
 
-enum DolbyVisionTrackMode 
+enum DolbyVisionTrackMode
 {
     SINGLE,
     DUAL,
@@ -128,8 +128,8 @@ enum DolbyVisionEsMode
 
 
 
-/** 
- * @brief DASH profile 
+/**
+ * @brief DASH profile
  */
 enum DashProfile { Main, OnDemand, Live, HbbTV };
 
@@ -202,7 +202,7 @@ typedef struct usr_cfg_mux_t_
     uint32_t    max_pdu_size;              /**< max mtu size for network payload (hint track) */
 
     int32_t es_num;
-    enum OutputFormat output_format;            
+    enum OutputFormat output_format;
     enum DashProfile dash_profile;
     uint32_t segment_output_flag;
     uint32_t SegmentCounter;
@@ -381,7 +381,7 @@ typedef struct track_t_
     uint64_t         frag_dts;                  /**< cut off dts in media_timescale */
     uint32_t         frag_duration;             /**< fragment duration in media_timescale */
     /* the number of sample available within an entry still available for next trun */
-    BOOL             traf_is_prepared;          /**< indicates a track fragment run is already prepared and the get_trun() 
+    BOOL             traf_is_prepared;          /**< indicates a track fragment run is already prepared and the get_trun()
                                                      only returns the max. size as single trun */
     uint32_t         size_cnt, cts_offset_cnt;
     uint64_t         frag_size;                 /**< size of track fragments mdat in bytes */
@@ -612,8 +612,8 @@ struct mp4_ctrl_t_
 
     /**** Items to be added to the meta box (memory managed externally) */
     const int8_t     *footer_meta_xml_data;
-    const int8_t     *footer_meta_hdlr_type; 
-    const int8_t     *footer_meta_hdlr_name; 
+    const int8_t     *footer_meta_hdlr_type;
+    const int8_t     *footer_meta_hdlr_name;
     const int8_t     **footer_meta_items;
     const uint32_t   *footer_meta_item_sizes;
     uint16_t         num_footer_meta_items;

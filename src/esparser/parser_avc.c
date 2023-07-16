@@ -17,7 +17,7 @@
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ************************************************************************************************************/
@@ -151,7 +151,7 @@ parser_avc_post_validation(parser_handle_t parser)
     if (parser->reporter) {
         parser_avc_handle_t parser_avc = (parser_avc_handle_t) parser;
         if (IS_FOURCC_EQUAL(parser->conformance_type, "cffh") ||
-            IS_FOURCC_EQUAL(parser->conformance_type, "cffs")) 
+            IS_FOURCC_EQUAL(parser->conformance_type, "cffs"))
         {
             return parser_avc_ccff_post_validation(parser_avc);
         }
@@ -1051,7 +1051,7 @@ parse_sei_messages(avc_decode_t *dec, nal_handle_t nal, BOOL keep_all)
     }
 
     msglog(NULL, MSGLOG_WARNING, "Error decoding sei message\n");
-    return (uint32_t)nal->nal_size;  
+    return (uint32_t)nal->nal_size;
 }
 
 static void
@@ -1102,8 +1102,8 @@ timing_info_update(parser_avc_handle_t parser_avc, sps_t *p_sps)
     {
         uint32_t level = parser_avc->width * parser_avc->height * parser_avc->framerate;
 
-        if ((parser_avc->dv_el_nal_flag== 0) 
-            && (parser_avc->dv_rpu_nal_flag == 1) 
+        if ((parser_avc->dv_el_nal_flag== 0)
+            && (parser_avc->dv_rpu_nal_flag == 1)
             && (parser_avc->ext_timing.ext_dv_profile != 9))
         {
             level = level * 4;
@@ -1298,7 +1298,7 @@ dsi_update(dsi_avc_handle_t dsi_avc, sps_t *sps)
     }
 }
 
-static int32_t 
+static int32_t
 incr_nal_idx( au_nals_t * au_nals )
 {
     au_nals->nal_idx++;
@@ -1387,7 +1387,7 @@ add_end_of_stram(au_nals_t *au_nals, BOOL keep_scp)
  * Returns error code.
  */
 static int
-parser_avc_clone_dsi(parser_handle_t parser) 
+parser_avc_clone_dsi(parser_handle_t parser)
 {
     /* Create new entry in stsd list */
     dsi_handle_t    new_dsi = parser->dsi_create(parser->dsi_type);
@@ -1400,7 +1400,7 @@ parser_avc_clone_dsi(parser_handle_t parser)
     buf_entry_t* new_entry = NULL;
     it_list_handle_t it = NULL;
     uint32_t i = 0;
-    
+
     if (!new_dsi)
     {
         return EMA_MP4_MUXED_NO_MEM;
@@ -1600,7 +1600,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
     sample->dependency_level      = 0;
     sample->pic_type              = 0;
     sample->frame_type            = 0xff;
-    
+
     if (IS_FOURCC_EQUAL(parser->dsi_name,"avc3") && parser->ext_timing.ps_present_flag != 2)
     {
         mp4ff_dsi->dsi_in_mdat = 1;
@@ -1723,7 +1723,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                     dsi_avc   = (dsi_avc_handle_t)parser->curr_dsi;
                     mp4ff_dsi = (mp4_dsi_avc_handle_t)dsi_avc;
                     /** PPS could be kept in the bitstream if the SPS keep the same */
-                    if (single_sps_flag) 
+                    if (single_sps_flag)
                     {
                         keep_nal = TRUE;
                     }
@@ -1784,7 +1784,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
             break;
 
         /** DolbyVision RPU NALs */
-        case NAL_TYPE_UNSPECIFIED28: 
+        case NAL_TYPE_UNSPECIFIED28:
             /** Dolby Vision RPU NALs found, but the user don't want to signal; Just mux it to comment mp4 */
             if (parser->ext_timing.ext_dv_profile == 0xff)
             {
@@ -1798,14 +1798,14 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
             break;
 
         /** DolbyVision EL NALs */
-        case NAL_TYPE_UNSPECIFIED30: 
+        case NAL_TYPE_UNSPECIFIED30:
             {
                 uint8_t nal_unit_type = 0;
                 parser->dv_el_nal_flag = 1;
                 keep_nal  = TRUE;
 
-                /** For single track, retrieve sps, pps at the first sample. */            
-                if (!parser->dv_el_track_flag && parser_avc->au_num == 0) 
+                /** For single track, retrieve sps, pps at the first sample. */
+                if (!parser->dv_el_track_flag && parser_avc->au_num == 0)
                 {
                     mp4_dsi_avc_handle_t dsi = (mp4_dsi_avc_handle_t) (((parser_avc_handle_t) parser)->dsi_enh);
                     nal_t nal_temp;
@@ -1814,7 +1814,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                     {
                         return err;
                     }
-                    
+
                     nal_unit_type = nal->nal_buf[6] & 0x1f;
                     nal_temp.nal_buf = nal->nal_buf + 2;
                     nal_temp.nal_size = nal->nal_size - 2;
@@ -1937,7 +1937,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                  /* I slice */
                  sample->frame_type = 0;
                  break;
-        
+
              case 0:
              case 3:
              case 5:
@@ -1945,7 +1945,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                  /* P slice */
                  sample->frame_type = 1;
                  break;
-        
+
              default:
                  /* B slice */
                  sample->frame_type = 2;
@@ -1954,16 +1954,16 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
 
         if (sample->sample_has_redundancy == 0)
         {
-            sample->sample_has_redundancy = 
+            sample->sample_has_redundancy =
                 (dec->sample_has_redundancy == TRUE) ? 1 : 2;
-        }    
+        }
 
         /**** done with current nal, load a new nal */
         if (!get_a_nal(nal))
         {
             break;
         }
-        
+
         new_au_start = parser_avc_parse_nal_1(nal->nal_buf, nal->nal_size, dec);
 
         if (new_au_start && parser_avc->sample_size)
@@ -2137,7 +2137,7 @@ parser_avc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
 
     /* validation of AU */
     if (IS_FOURCC_EQUAL(parser->conformance_type, "cffh") ||
-        IS_FOURCC_EQUAL(parser->conformance_type, "cffs")) 
+        IS_FOURCC_EQUAL(parser->conformance_type, "cffs"))
     {
         if (sample->flags & SAMPLE_NEW_SD)
         {
@@ -2293,7 +2293,7 @@ build_sample(parser_avc_handle_t parser_avc, mp4_sample_handle_t sample)
             /* we have Bp, for now use last value: highest bit rate and lowest delay */
             sample->dts = (dec->initial_cpb_removal_delay_last*(uint64_t)parser_avc->time_scale)/90000;
         }
-        else 
+        else
         {
             sample->dts = (7*parser_avc->time_scale)/10;  /* assuming 0.7 sec */
         }
@@ -2641,7 +2641,7 @@ parser_avc_get_subsample(parser_handle_t parser, int64_t *pos, uint32_t subs_num
     do
     {
         uint64_t u;
-        if (src_rd_u64(src, &u) != 0) 
+        if (src_rd_u64(src, &u) != 0)
         {
             return EMA_MP4_MUXED_READ_ERR;
         }
@@ -2654,7 +2654,7 @@ parser_avc_get_subsample(parser_handle_t parser, int64_t *pos, uint32_t subs_num
         {
             return EMA_MP4_MUXED_READ_ERR;
         }
-    } 
+    }
     while (--subs_num_in);
 
     *bufsize_ptr = nal_unit_len + size;
@@ -2750,7 +2750,7 @@ parser_avc_copy_sample(parser_handle_t parser, bbio_handle_t snk, int64_t pos)
     while (nal_num--)
     {
         uint64_t u;
-        if (src_rd_u64(src, &u) != 0) 
+        if (src_rd_u64(src, &u) != 0)
         {
             return EMA_MP4_MUXED_READ_ERR;
         }
@@ -2951,9 +2951,9 @@ parser_avc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
         }
 
         /* user's setting override parser's value*/
-        if (parser->ext_timing.ext_dv_profile != 0xff) 
+        if (parser->ext_timing.ext_dv_profile != 0xff)
         {
-            if ((parser->ext_timing.ext_dv_profile == 0) 
+            if ((parser->ext_timing.ext_dv_profile == 0)
                 || (parser->ext_timing.ext_dv_profile == 1)
                 || (parser->ext_timing.ext_dv_profile == 9))
             {
@@ -2976,7 +2976,7 @@ parser_avc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
     }
     if ((parser->ext_timing.ext_dv_profile == 0) || (parser->ext_timing.ext_dv_profile == 9))
     {
-        parser->dv_dsi_buf[4] |= (2 << 4); 
+        parser->dv_dsi_buf[4] |= (2 << 4);
     }
 
     /** If there's el nal, then extract the dsi info, which could be used to create avcE */
@@ -3368,7 +3368,7 @@ parser_avc_write_au(parser_handle_t parser, uint8_t *data, size_t size, bbio_han
 
         if (remain < nal_size)
         {
-            msglog(NULL, MSGLOG_ERR, 
+            msglog(NULL, MSGLOG_ERR,
                    "Advertised NAL size is %u, but only %" PRIz " bytes remaining, illegal data\n",
                    nal_size, remain);
 
@@ -3596,7 +3596,7 @@ parser_avc_codec_config(parser_handle_t parser, bbio_handle_t info_sink)
         list_add_entry(dsi->sps_lst, nalu);
         if (i == 0)
         {
-            uint8_t       rbsp_bytes[128];  
+            uint8_t       rbsp_bytes[128];
             size_t        rbsp_size;
             bbio_handle_t dsb = 0;
             int32_t           ret;
@@ -3738,7 +3738,7 @@ parser_avc_create(uint32_t dsi_type)
     {
         parser->get_cfg = parser_avc_get_mp4_cfg;
     }
-    
+
     OSAL_STRNCPY(parser->codec_name, 12, "\012AVC Coding", 12);
 
     parser->get_param    = parser_avc_get_param;
@@ -3748,7 +3748,7 @@ parser_avc_create(uint32_t dsi_type)
     parser->parse_codec_config = parser_avc_codec_config;
 
     /**** avc only */
-    parser->need_fix_cts   = parser_avc_need_fix_cts;
+    parser->need_fix_cts    = parser_avc_need_fix_cts;
     parser->get_cts_offset = parser_avc_get_cts_offset;
     if (dsi_type == DSI_TYPE_MP4FF)
     {
@@ -3813,8 +3813,8 @@ parser_avc_reg(void)
 
 #define _REPORT(lvl,msg) parser_avc->reporter->report(parser_avc->reporter, lvl, msg)
 
-static void 
-parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)   
+static void
+parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
 {
     char     str[256];
     uint32_t frameRate1000 = (parser_avc->num_units_in_tick==0) ? 0 : ((parser_avc->time_scale * 1000) / parser_avc->num_units_in_tick);
@@ -3834,7 +3834,7 @@ parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
         sprintf(str, "AVC: Video frame rate %f.", (float)frameRate1000/1000.0f);
         _REPORT(REPORT_LEVEL_INFO, str);
 
-        if (IS_FOURCC_EQUAL(parser_avc->conformance_type, "cffs")) 
+        if (IS_FOURCC_EQUAL(parser_avc->conformance_type, "cffs"))
         {
             _REPORT(REPORT_LEVEL_INFO, "AVC SD: Testing video profile_idc.");
             if (p_sps->profile_idc != 66)
@@ -3853,7 +3853,7 @@ parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
                 (parser_avc->width <= 640 && parser_avc->height == 480))
             {
                 _REPORT(REPORT_LEVEL_INFO, "AVC SD: Testing video frame rate for 640x480 picture format.");
-                if (frameRate1000 != 23976 && 
+                if (frameRate1000 != 23976 &&
                     frameRate1000 != 25000 &&
                     frameRate1000 != 29970)
                 {
@@ -3865,7 +3865,7 @@ parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
                      (parser_avc->width <= 854 && parser_avc->height == 480))
             {
                 _REPORT(REPORT_LEVEL_INFO, "AVC SD: Testing video frame rate for 854x480 picture format.");
-                if (frameRate1000 != 23976 && 
+                if (frameRate1000 != 23976 &&
                     frameRate1000 != 25000)
                 {
                     sprintf(str, "AVC SD: %f is invalid video frame rate for 854x480 picture format.", (float)frameRate1000/1000.0f);
@@ -3898,7 +3898,7 @@ parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
                 (parser_avc->width <= 1280 && parser_avc->height == 720))
             {
                 _REPORT(REPORT_LEVEL_INFO, "AVC HD: Testing video frame rate for 1280x720 picture format.");
-                if (frameRate1000 != 23976 && 
+                if (frameRate1000 != 23976 &&
                     frameRate1000 != 25000 &&
                     frameRate1000 != 29970 &&
                     frameRate1000 != 50000 &&
@@ -3912,7 +3912,7 @@ parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
                      (parser_avc->width <= 1920 && parser_avc->height == 1080))
             {
                 _REPORT(REPORT_LEVEL_INFO, "AVC HD: Testing video frame rate for 1920x1080 picture format.");
-                if (frameRate1000 != 23976 && 
+                if (frameRate1000 != 23976 &&
                     frameRate1000 != 25000 &&
                     frameRate1000 != 29970)
                 {
@@ -4125,8 +4125,8 @@ parser_avc_ccff_validate(parser_avc_handle_t parser_avc, avc_decode_t *hdec)
 }
 
 
-static int32_t 
-parser_avc_ccff_post_validation(parser_avc_handle_t parser_avc)   
+static int32_t
+parser_avc_ccff_post_validation(parser_avc_handle_t parser_avc)
 {
     char str[256];
     uint32_t max_dist_frames = (parser_avc->num_units_in_tick==0) ? 0 : ((parser_avc->time_scale * 3004) / parser_avc->num_units_in_tick);

@@ -17,7 +17,7 @@
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ************************************************************************************************************/
@@ -540,19 +540,19 @@ timing_info_update(parser_hevc_handle_t parser_hevc, hevc_decode_t * context)
         parser_hevc->time_scale                   = parser_hevc->ext_timing.time_scale;
         parser_hevc->au_ticks                   = parser_hevc->num_units_in_tick;
 
-        if (!context->s_vui.b_timing_info_present_flag && !context->s_vps.b_vps_timing_info_present_flag)  
+        if (!context->s_vui.b_timing_info_present_flag && !context->s_vps.b_vps_timing_info_present_flag)
         {
             msglog(NULL, MSGLOG_NOTICE, "No timing info found in ES, so we just use user's setting! \n");
         }
         else
         {
-            msglog(NULL, MSGLOG_NOTICE, 
+            msglog(NULL, MSGLOG_NOTICE,
                 "Found timing info in ES and user want to set a new one, so we use user's setting! \n");
         }
     }
     else
     {
-        if (context->s_vui.b_timing_info_present_flag ||context->s_vps.b_vps_timing_info_present_flag)  
+        if (context->s_vui.b_timing_info_present_flag ||context->s_vps.b_vps_timing_info_present_flag)
         {
             if (context->s_vui.b_timing_info_present_flag)
             {
@@ -574,7 +574,7 @@ timing_info_update(parser_hevc_handle_t parser_hevc, hevc_decode_t * context)
             parser_hevc->time_scale                   = parser_hevc->ext_timing.time_scale;
             parser_hevc->au_ticks                   = parser_hevc->num_units_in_tick;
 
-            msglog(NULL, MSGLOG_NOTICE, 
+            msglog(NULL, MSGLOG_NOTICE,
                 "No timing info found in ES and no user's setting, we just use a default timing(30 fps)! \n");
         }
     }
@@ -591,12 +591,12 @@ timing_info_update(parser_hevc_handle_t parser_hevc, hevc_decode_t * context)
         {
             actual_height = parser_hevc->height;
         }
-        
+
         level  = parser_hevc->width * actual_height * parser_hevc->framerate;
 
-        if ((parser_hevc->dv_el_nal_flag== 0) && (parser_hevc->dv_rpu_nal_flag == 1) 
+        if ((parser_hevc->dv_el_nal_flag== 0) && (parser_hevc->dv_rpu_nal_flag == 1)
             && (parser_hevc->ext_timing.ext_dv_profile != 5)
-            && (parser_hevc->ext_timing.ext_dv_profile != 8)) 
+            && (parser_hevc->ext_timing.ext_dv_profile != 8))
         {
             level = level * 4;
         }
@@ -776,11 +776,11 @@ dsi_update(dsi_hevc_handle_t dsi_hevc, hevc_decode_t * context)
 
 
     mp4ff_dsi->profile_compatibility_indications = temp;
-    
-    mp4ff_dsi->progressive_source_flag = context->as_protile[0].b_general_progressive_source;     
-    mp4ff_dsi->interlaced_source_flag = context->as_protile[0].b_general_interlaced_source;      
-    mp4ff_dsi->non_packed_constraint_flag = context->as_protile[0].b_general_non_packed_constraint; 
-    mp4ff_dsi->frame_only_constraint_flag = context->as_protile[0].b_general_frame_only_constraint; 
+
+    mp4ff_dsi->progressive_source_flag = context->as_protile[0].b_general_progressive_source;
+    mp4ff_dsi->interlaced_source_flag = context->as_protile[0].b_general_interlaced_source;
+    mp4ff_dsi->non_packed_constraint_flag = context->as_protile[0].b_general_non_packed_constraint;
+    mp4ff_dsi->frame_only_constraint_flag = context->as_protile[0].b_general_frame_only_constraint;
 
     mp4ff_dsi->constraint_indicator_flags = 0; /** currently this info is just set to 0 */
     mp4ff_dsi->level_idc = (uint8_t)context->as_protile[0].i_level;
@@ -799,7 +799,7 @@ dsi_update(dsi_hevc_handle_t dsi_hevc, hevc_decode_t * context)
 
 }
 
-static int 
+static int
 incr_nal_idx( hevc_au_nals_t * au_nals )
 {
     au_nals->nal_idx++;
@@ -818,7 +818,7 @@ incr_nal_idx( hevc_au_nals_t * au_nals )
  * Returns error code.
  */
 static int
-parser_hevc_clone_dsi(parser_handle_t parser) 
+parser_hevc_clone_dsi(parser_handle_t parser)
 {
     /** Create new entry in stsd list */
     dsi_handle_t    new_dsi = parser->dsi_create(parser->dsi_type);
@@ -831,7 +831,7 @@ parser_hevc_clone_dsi(parser_handle_t parser)
     buf_entry_t* new_entry = NULL;
     it_list_handle_t it = NULL;
     uint32_t i = 0;
-    
+
     if (!new_dsi)
     {
         return EMA_MP4_MUXED_NO_MEM;
@@ -1022,7 +1022,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
     video_parameter_set_t *              p_active_vps;
     sequence_parameter_set_t *           p_active_sps;
     picture_parameter_set_t *            p_active_pps;
-    
+
     BOOL       old_au_end = FALSE;
     BOOL       nal_vcl_flag = FALSE;
     BOOL       keep_nal= FALSE;
@@ -1047,8 +1047,8 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
     _context_el = (hevc_decode_t *)(&(parser_hevc->dec_el));
     assert(_context_el);
 
-    bitstream.pui8_payload = nal->nal_buf; 
-    bitstream.ui_length = (uint32_t)nal->nal_size; 
+    bitstream.pui8_payload = nal->nal_buf;
+    bitstream.ui_length = (uint32_t)nal->nal_size;
     bitstream_init( &bitstream );
 
     sample->flags = 0;  /** reset flag */
@@ -1079,7 +1079,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
     {
         mp4ff_dsi->dsi_in_mdat = 0;
     }
-    
+
     if (parser->dv_bl_non_comp_flag)
     {
         mp4ff_dsi->dsi_in_mdat = 1;
@@ -1243,7 +1243,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                 keep_nal  = TRUE;
                 break;
             /** DolbyVision EL NALs */
-            case NAL_UNIT_UNSPECIFIED_63: 
+            case NAL_UNIT_UNSPECIFIED_63:
                 if (!parser->dv_el_track_flag && parser_hevc->au_num == 0)
                 {
                     uint32_t index = 0;
@@ -1261,8 +1261,8 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                         for (index = 4; index < nal->nal_size - 2; index++)
                             temp_data[index] = nal->nal_buf[index+2];
 
-                        bitstream_el.pui8_payload = temp_data; 
-                        bitstream_el.ui_length = (uint32_t)nal->nal_size - 2; 
+                        bitstream_el.pui8_payload = temp_data;
+                        bitstream_el.ui_length = (uint32_t)nal->nal_size - 2;
                         bitstream_init( &bitstream_el );
 
                         err = read_input_nalu( &bitstream_el, &nalu_el);
@@ -1308,7 +1308,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
             case NAL_UNIT_CODED_SLICE_IDR_N_LP:
             case NAL_UNIT_CODED_SLICE_CRA:
             case NAL_UNIT_CODED_SLICE_RADL_R:
-            case NAL_UNIT_CODED_SLICE_RADL_N:  
+            case NAL_UNIT_CODED_SLICE_RADL_N:
             case NAL_UNIT_CODED_SLICE_RASL_R:
             case NAL_UNIT_CODED_SLICE_RASL_N:
                 nal_vcl_flag = TRUE;
@@ -1334,7 +1334,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
 
         /** to get nal_size and sc_off_next if havn't, reach next sc */
         skip_the_nal(nal);
-        
+
 
         /******* book keep the nal */
         if (keep_nal)
@@ -1368,24 +1368,24 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
 
         5.2        DASH Specific Aspects for HEVC Video
         5.2.1      HEVC Specifics
-        The encapsulation of HEVC video data in ISO BMFF is defined in ISO/IEC 14496-15 [5]. 
-        Players which support HEVC shall support both sample entries using 'hvc1' and 'hev1' 
+        The encapsulation of HEVC video data in ISO BMFF is defined in ISO/IEC 14496-15 [5].
+        Players which support HEVC shall support both sample entries using 'hvc1' and 'hev1'
         (both storage for VPS/SPS/PPS within the initialisation segment or inband within the
-        media segment). IDR pictures with nal_unit_type equal to IDR_N_LP and IDR_W_RADL are 
-        mapped to SAP types 1 and 2, respectively. BLA pictures with nal_unit_type equal to 
-        BLA_N_LP and BLA_W_RADL are mapped to SAP types 1 and 2, respectively. 
+        media segment). IDR pictures with nal_unit_type equal to IDR_N_LP and IDR_W_RADL are
+        mapped to SAP types 1 and 2, respectively. BLA pictures with nal_unit_type equal to
+        BLA_N_LP and BLA_W_RADL are mapped to SAP types 1 and 2, respectively.
 
-        Note: The mapping to SAP type 3 for ISO BMFF with HEVC deliberately remains undefined 
-        until MPEG reaches a conclusion. This includes the mapping of all other types of HEVC 
-        DVB_RAP pictures (including BLA pictures with nal_unit_type equal to BLA_W_LP, CRA 
-        pictures with nal_unit_type equal to CRA_NUT and pictures with nal_unit_type equal to 
-        TRAIL_R that contain only slices with slice_type equal to 2 (I slice), as specified in 
+        Note: The mapping to SAP type 3 for ISO BMFF with HEVC deliberately remains undefined
+        until MPEG reaches a conclusion. This includes the mapping of all other types of HEVC
+        DVB_RAP pictures (including BLA pictures with nal_unit_type equal to BLA_W_LP, CRA
+        pictures with nal_unit_type equal to CRA_NUT and pictures with nal_unit_type equal to
+        TRAIL_R that contain only slices with slice_type equal to 2 (I slice), as specified in
         ETSI TS 101 154 [4] clause 5.14.1.8). */
         if (nal_vcl_flag && !pic_type_setting_flag)
         {
             if (   nalu.e_nalu_type == NAL_UNIT_CODED_SLICE_IDR_N_LP
                 || nalu.e_nalu_type == NAL_UNIT_CODED_SLICE_CRA
-                || nalu.e_nalu_type == NAL_UNIT_CODED_SLICE_BLA_N_LP ) 
+                || nalu.e_nalu_type == NAL_UNIT_CODED_SLICE_BLA_N_LP )
             {
                 sample->pic_type         = 1;
                 sample->frame_type       = 0;
@@ -1423,8 +1423,8 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
         }
 
         /*** reset the parser bitstream after every nal parsing finished */
-        bitstream.pui8_payload = nal->nal_buf; 
-        bitstream.ui_length = (uint32_t)nal->nal_size; 
+        bitstream.pui8_payload = nal->nal_buf;
+        bitstream.ui_length = (uint32_t)nal->nal_size;
         bitstream_init( &bitstream );
 
         if (nal_vcl_flag == 1)
@@ -1433,7 +1433,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
 
             /** IDR_W_RADL, it may have associated nals*/
             uint8_t nal_type_data = *(nal->nal_buf + nal->sc_size);
-            hevc_nalu_type_t nal_type = (hevc_nalu_type_t)(nal_type_data >> 1);  
+            hevc_nalu_type_t nal_type = (hevc_nalu_type_t)(nal_type_data >> 1);
             uint8_t first_slice_flag = 0;
 
             switch(nal_type) {
@@ -1450,12 +1450,12 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
             case NAL_UNIT_CODED_SLICE_IDR_N_LP:
             case NAL_UNIT_CODED_SLICE_CRA:
             case NAL_UNIT_CODED_SLICE_RADL_R:
-            case NAL_UNIT_CODED_SLICE_RADL_N:  
+            case NAL_UNIT_CODED_SLICE_RADL_N:
             case NAL_UNIT_CODED_SLICE_RASL_R:
             case NAL_UNIT_CODED_SLICE_RASL_N:
                 first_slice_flag =  *(nal->nal_buf + nal->sc_size + 2) & 0x80;
                 break;
-            case NAL_UNIT_ACCESS_UNIT_DELIMITER: 
+            case NAL_UNIT_ACCESS_UNIT_DELIMITER:
                 first_slice_flag = 1;
                 break;
             default:
@@ -1473,7 +1473,7 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
                 }
                 else
                 {
-                    if((nal_type == NAL_UNIT_PREFIX_SEI) || (nal_type == NAL_UNIT_ACCESS_UNIT_DELIMITER)) 
+                    if((nal_type == NAL_UNIT_PREFIX_SEI) || (nal_type == NAL_UNIT_ACCESS_UNIT_DELIMITER))
                     {
                         old_au_end = TRUE;
                         msglog(NULL, MSGLOG_DEBUG, "\nPrev au %u complete\n", parser_hevc->au_num);
@@ -1522,14 +1522,14 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
         /** within a seq, active_sps remain the same */
         parser_hevc->width    = p_active_sps->i_pic_luma_width;
         parser_hevc->height   = p_active_sps->i_pic_luma_height;
-        if(_context->s_vui.b_aspect_ratio_info == TRUE) 
+        if(_context->s_vui.b_aspect_ratio_info == TRUE)
         {
-            parser_hevc->hSpacing = _context->s_vui.i_sar_width; 
+            parser_hevc->hSpacing = _context->s_vui.i_sar_width;
             parser_hevc->vSpacing = _context->s_vui.i_sar_height;
         }
         else
         {  /*** if sar info not present in ES, the value should be set to 0 or 1?? */
-            parser_hevc->vSpacing = 1; 
+            parser_hevc->vSpacing = 1;
             parser_hevc->hSpacing = 1;
         }
 
@@ -1554,14 +1554,14 @@ parser_hevc_get_sample(parser_handle_t parser, mp4_sample_handle_t sample)
     sample->cts = _context->poc_offset + _context->i_prev_poc*parser_hevc->au_ticks;
 
     update_idx_value_lst(parser_hevc->hevc_cts_offset_lst, parser_hevc->num_samples, sample->cts - sample->dts);
-    
+
     sample->duration = parser_hevc->au_ticks;
 
     /**** data */
     sample->size = parser_hevc->sample_size;
 
     save_au_nals_info(au_nals, sample, parser_hevc->tmp_bbo);
-    
+
     if (_context->IDR_pic_flag)
     {
         uint32_t dist = parser_hevc->au_num - parser_hevc->last_idr_pos;
@@ -1636,7 +1636,7 @@ parser_hevc_get_subsample(parser_handle_t parser, int64_t *pos, uint32_t subs_nu
     do
     {
         uint64_t u;
-        if (src_rd_u64(src, &u) != 0) 
+        if (src_rd_u64(src, &u) != 0)
         {
             return EMA_MP4_MUXED_READ_ERR;
         }
@@ -1706,7 +1706,6 @@ parser_hevc_need_fix_ctts(parser_handle_t parser)
     return TRUE;
 }
 
-
 static int32_t
 parser_hevc_get_cts_offset(parser_handle_t parser, uint32_t sample_idx)
 {
@@ -1770,11 +1769,11 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
 
     /** HEVCDecoderConfigurationRecord - see [ISOAVC/PDAM] Section 8.3.3.1.1 */
     sink_write_u8(snk, 1);                    /** configurationVersion = 1 */
-    
+
     sink_write_bits(snk, 2, dsi->profile_space);
     sink_write_bits(snk, 1, dsi->tier_flag);
     sink_write_bits(snk, 5, dsi->profile_idc);
-    
+
     sink_write_u32(snk, dsi->profile_compatibility_indications);
 
     sink_write_bits(snk, 1, dsi->progressive_source_flag);
@@ -1783,7 +1782,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
     sink_write_bits(snk, 1, dsi->frame_only_constraint_flag);
 
     sink_write_bits(snk, 44, 0); /** just set constraint_indicator_flags = 0 */
-    
+
     sink_write_u8(snk, dsi->level_idc);
 
     sink_write_bits(snk, 4, 0xf);
@@ -1794,7 +1793,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
 
     sink_write_bits(snk, 6, 0x3F);
     sink_write_bits(snk, 2,dsi->chromaFormat);
-    
+
     sink_write_bits(snk, 5, 0x1F);
     sink_write_bits(snk, 3, dsi->bitDepthLumaMinus8);
 
@@ -1807,7 +1806,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
     sink_write_bits(snk, 3, dsi->numTemporalLayers);
     sink_write_bits(snk, 1, dsi->temporalIdNested);
     sink_write_bits(snk, 2, dsi->lengthSizeMinusOne);
-    
+
     dsi->numOfArrays = 0;
     if(list_get_entry_num(dsi->vps_lst))
         dsi->numOfArrays++;
@@ -1882,7 +1881,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
                 parser->dv_dsi_buf[3] = 6; /** EL+RPU */
         }
 
-        if (parser->ext_timing.ext_dv_profile != 0xff) 
+        if (parser->ext_timing.ext_dv_profile != 0xff)
         {
             if ((parser->ext_timing.ext_dv_profile > 1) && (parser->ext_timing.ext_dv_profile < 9))
             {
@@ -1923,7 +1922,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
 
     if ((parser->ext_timing.ext_dv_profile == 2) || (parser->ext_timing.ext_dv_profile == 4))
     {
-        parser->dv_dsi_buf[4] |= (2 << 4); 
+        parser->dv_dsi_buf[4] |= (2 << 4);
     }
     else if (parser->ext_timing.ext_dv_profile == 6)
     {
@@ -1935,8 +1934,8 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
     }
     else if (parser->ext_timing.ext_dv_profile == 8)
     {
-        parser->dv_dsi_buf[4] |= (parser->ext_timing.ext_dv_bl_compatible_id << 4); 
-    } 
+        parser->dv_dsi_buf[4] |= (parser->ext_timing.ext_dv_bl_compatible_id << 4);
+    }
 
     it_destroy(it);
 
@@ -1951,13 +1950,13 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
         it_list_handle_t     it  = it_create();
         snk = reg_bbio_get('b', 'w');
         snk->set_buffer(snk, NULL, 1024, 1);
-        
+
         sink_write_u8(snk, 1);                    /** configurationVersion = 1 */
-    
+
         sink_write_bits(snk, 2, dsi->profile_space);
         sink_write_bits(snk, 1, dsi->tier_flag);
         sink_write_bits(snk, 5, dsi->profile_idc);
-    
+
         sink_write_u32(snk, dsi->profile_compatibility_indications);
 
         sink_write_bits(snk, 1, dsi->progressive_source_flag);
@@ -1966,7 +1965,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
         sink_write_bits(snk, 1, dsi->frame_only_constraint_flag);
 
         sink_write_bits(snk, 44, 0); /** just set constraint_indicator_flags = 0 */
-    
+
         sink_write_u8(snk, dsi->level_idc);
 
         sink_write_bits(snk, 4, 0xf);
@@ -1977,7 +1976,7 @@ parser_hevc_get_mp4_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len)
 
         sink_write_bits(snk, 6, 0x3F);
         sink_write_bits(snk, 2,dsi->chromaFormat);
-    
+
         sink_write_bits(snk, 5, 0x1F);
         sink_write_bits(snk, 3, dsi->bitDepthLumaMinus8);
 
@@ -2210,7 +2209,7 @@ parser_hevc_init(parser_handle_t parser, ext_timing_info_t *ext_timing, uint32_t
 
     /** validation */
     parser_hevc->last_idr_pos    = (uint32_t)(-1);
-    parser_hevc->post_validation = NULL; 
+    parser_hevc->post_validation = NULL;
 
     parser_hevc->hevc_cts_offset_lst = list_create(sizeof(idx_value_t));
 
@@ -2273,15 +2272,15 @@ parser_hevc_create(uint32_t dsi_type)
         parser->get_cfg = parser_hevc_get_mp4_cfg;
     }
 
-    parser->get_param    = NULL; 
+    parser->get_param    = NULL;
     parser->get_param_ex = NULL;
 
     /**** demux related api, currently hevc muxer don't need them */
-    parser->show_info          = NULL; 
-    parser->parse_codec_config = NULL; 
+    parser->show_info          = NULL;
+    parser->parse_codec_config = NULL;
 
     /**** avc only,hevc don't need them */
-    parser->need_fix_cts   = parser_hevc_need_fix_ctts;
+    parser->need_fix_cts    = parser_hevc_need_fix_ctts;
     parser->get_cts_offset = parser_hevc_get_cts_offset;
 
     if (dsi_type == DSI_TYPE_MP4FF)
@@ -2326,4 +2325,3 @@ parser_hevc_reg(void)
     reg_parser_set("h265", parser_hevc_create);
     reg_parser_set("265",  parser_hevc_create);
 }
-

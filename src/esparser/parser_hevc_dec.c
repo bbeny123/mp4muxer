@@ -17,7 +17,7 @@
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ************************************************************************************************************/
@@ -43,14 +43,14 @@
 #define SWAP_ENDIAN32(x) ((((uint8_t *)&x)[0] << 24) | \
                          (((uint8_t *)&x)[1] << 16)  | \
                          (((uint8_t *)&x)[2] << 8)   | \
-                         (( uint8_t *)&x)[3])  
+                         (( uint8_t *)&x)[3])
 
 int32_t gi_max_val_luma = 0;
 int32_t gi_max_val_chroma = 0;
 
 extern void parser_avc_remove_0x03(uint8_t *dst, size_t *dstlen, const uint8_t *src, const size_t srclen);
 
-void 
+void
 hevcdec_create_context(hevc_decode_t *context)
 {
     memset( context, 0, sizeof(hevc_decode_t) );
@@ -82,7 +82,7 @@ hevc_dec_init(hevc_decode_t *dec)
     hevcdec_create_context(dec);
 }
 
-void 
+void
 bitstream_init( bitstream_t *bitstream )
 {
     bitstream->ui32_curr_bits = *((int32_t *)( bitstream->pui8_payload ));
@@ -96,7 +96,7 @@ bitstream_init( bitstream_t *bitstream )
     bitstream->ui32_next_bits = SWAP_ENDIAN32( bitstream->ui32_next_bits );
 }
 
-uint32_t 
+uint32_t
 bitstream_read( bitstream_t *bitstream, uint32_t ui_num_bits )
 {
     uint32_t ret_val;
@@ -155,11 +155,11 @@ bitstream_read( bitstream_t *bitstream, uint32_t ui_num_bits )
     return ret_val;
 }
 
-uint32_t 
+uint32_t
 bitstream_peek( bitstream_t *bitstream, uint32_t ui_num_bits )
 {
     uint32_t retVal = 0;
-    
+
     uint32_t saved0, saved1, saved2, saved3, saved4;
     int64_t saved5;
 
@@ -183,9 +183,9 @@ bitstream_peek( bitstream_t *bitstream, uint32_t ui_num_bits )
     return retVal;
 }
 
-bool 
+bool
 more_rbsp_data( bitstream_t *bitstream )
-{ 
+{
     uint8_t ui_last_byte;
     int64_t i_bits_left = bitstream->i64_bits_available;
 
@@ -209,20 +209,20 @@ more_rbsp_data( bitstream_t *bitstream )
     return i_bits_left > 0;
 }
 
-bool 
+bool
 bitstream_byte_aligned( bitstream_t *bitstream )
 {
     return ( bitstream->ui_bit_idx & 7 ) == 0;
 }
 
-void 
+void
 bitstream_byte_align( bitstream_t *bitstream )
 {
     if( ( bitstream->ui_bit_idx & 7 ) != 0 )
         bitstream_read( bitstream, 8 - (bitstream->ui_bit_idx & 7) );
 }
 
-uint32_t 
+uint32_t
 read_input_nalu( bitstream_t *bitstream, hevc_nalu_t *p_nalu)
 {
     /* cf. B.1 */
@@ -289,12 +289,12 @@ read_input_nalu( bitstream_t *bitstream, hevc_nalu_t *p_nalu)
     return 0;
 }
 
-uint32_t 
+uint32_t
 bitstream_read_uvlc( bitstream_t *bitstream )
 {
     int32_t i_val = 0, i_length;
     int32_t i_code = bitstream_read( bitstream, 1 );
-    
+
     if( 0 == i_code )
     {
         i_length = 0;
@@ -313,11 +313,11 @@ bitstream_read_uvlc( bitstream_t *bitstream )
 }
 
 
-int32_t 
+int32_t
 bitstream_read_svlc( bitstream_t *bitstream )
 {
     int32_t i_bits = bitstream_read( bitstream, 1 );
-    
+
     if( 0 == i_bits )
     {
         int32_t i_length = 0;
@@ -337,7 +337,7 @@ bitstream_read_svlc( bitstream_t *bitstream )
     return 0;
 }
 
-void 
+void
 parse_profile_tier( bitstream_t *p_bitstream, profile_tier_level_t *p_ptl )
 {
     int32_t i_idx;
@@ -360,7 +360,7 @@ parse_profile_tier( bitstream_t *p_bitstream, profile_tier_level_t *p_ptl )
 }
 
 
-void 
+void
 parse_ptl( bitstream_t *p_bitstream, profile_tier_level_t *p_ptl, bool b_profile_present, int32_t i_max_sublayers_minus1 )
 {
     int32_t i_idx;
@@ -398,16 +398,16 @@ parse_ptl( bitstream_t *p_bitstream, profile_tier_level_t *p_ptl, bool b_profile
     }
 }
 
-void 
+void
 parse_bitrate_picrate_info( bitstream_t *p_bitstream, bit_rate_picrate_info_t *info, int32_t tempLevelLow, int32_t tempLevelHigh )
 {
     int32_t i_idx;
-    
+
     for( i_idx = tempLevelLow; i_idx <= tempLevelHigh; i_idx++ )
     {
         info->m_bitRateInfoPresentFlag[ i_idx ] = bitstream_read( p_bitstream, 1 );
         info->m_picRateInfoPresentFlag[ i_idx ] = bitstream_read( p_bitstream, 1 );
-        
+
         if( info->m_bitRateInfoPresentFlag[ i_idx ] )
         {
             info->m_avgBitRate[ i_idx ] = bitstream_read( p_bitstream, 16 );
@@ -422,8 +422,8 @@ parse_bitrate_picrate_info( bitstream_t *p_bitstream, bit_rate_picrate_info_t *i
     }
 }
 
-void 
-decode_vps(hevc_decode_t  *context, hevc_nalu_t *p_nalu ) 
+void
+decode_vps(hevc_decode_t  *context, hevc_nalu_t *p_nalu )
 {
     int32_t i_idx, opIdx;
     bool b_subLayerOrderingInfoPresentFlag;
@@ -435,7 +435,7 @@ decode_vps(hevc_decode_t  *context, hevc_nalu_t *p_nalu )
     p_vps->i_max_temporal_layers = 1 + bitstream_read( &p_nalu->bitstream, 3 );
     p_vps->b_temporal_id_nesting = bitstream_read( &p_nalu->bitstream, 1 );
 
-    i_idx = bitstream_read( &p_nalu->bitstream, 16 );       /* vps_reserved_ffff_16bits */ 
+    i_idx = bitstream_read( &p_nalu->bitstream, 16 );       /* vps_reserved_ffff_16bits */
     assert( i_idx == 0xffff );
 
     parse_ptl( &p_nalu->bitstream, &context->as_protile[ 0 ], true, p_vps->i_max_temporal_layers - 1 );
@@ -499,19 +499,19 @@ decode_vps(hevc_decode_t  *context, hevc_nalu_t *p_nalu )
     if( (p_vps->b_extension = bitstream_read( &p_nalu->bitstream, 1 )) != false )
     {
         /* vps_extension_data_flag */
-        while( more_rbsp_data( &p_nalu->bitstream ) )    
+        while( more_rbsp_data( &p_nalu->bitstream ) )
             bitstream_read( &p_nalu->bitstream, 1 );
     }
     p_vps->b_isDefined= true;
 }
 
-void 
+void
 decode_short_term_rps( bitstream_t *bitstream, int32_t idx, reference_picture_set_t *p_rps, reference_picture_set_t *p_sets, sequence_parameter_set_t *p_sps )
 {
     int32_t i_idx, i_jdx;
 
     memset( p_rps, 0x0, sizeof(reference_picture_set_t) );
-    
+
     if( idx > 0 )
         p_rps->b_inter_rps_prediction = bitstream_read( bitstream, 1 );  /* inter_ref_pic_set_prediction_flag */
     else
@@ -522,21 +522,21 @@ decode_short_term_rps( bitstream_t *bitstream, int32_t idx, reference_picture_se
         int32_t i_ridx, i_bit, i_code;
         int32_t k = 0, k0 = 0, k1 = 0, i_delta_rps;
         reference_picture_set_t *p_rps_ref;
-        
+
         if( idx == p_sps->i_num_short_term_ref_pic_sets )
             i_code = bitstream_read_uvlc( bitstream );      /* delta_idx_minus1 delta index of the Reference Picture Set used for prediction minus 1 */
         else
             i_code = 0;
-        
-        /** delta_idx_minus1 shall not be larger than idx-1, otherwise we will predict from a negative row 
+
+        /** delta_idx_minus1 shall not be larger than idx-1, otherwise we will predict from a negative row
             position that does not exist. When idx equals 0 there is no legal value and interRPSPred must be zero. See J0185-r2 */
         assert( i_code <= idx-1 );
-        
+
         i_ridx = idx - 1 - i_code;
         assert( i_ridx <= idx-1 && i_ridx >= 0 ); /* if rIdx = idx then prediction is done from itself. rIdx must belong to range 0, idx-1, inclusive, see J0185-r2 */
 
         p_rps_ref = &p_sets[ i_ridx ];
-        
+
         i_bit = bitstream_read( bitstream, 1 );        /* delta_rps_sign */
         i_code = bitstream_read_uvlc( bitstream );     /* abs_delta_rps_minus1 */
         i_delta_rps = (1 - (i_bit<<1)) * (i_code + 1);
@@ -545,7 +545,7 @@ decode_short_term_rps( bitstream_t *bitstream, int32_t idx, reference_picture_se
         {
             int32_t i_ref_idc;
             i_bit = bitstream_read( bitstream, 1 ); /* used_by_curr_pic_flag */
-            
+
             i_ref_idc = i_bit;
             if( !i_ref_idc )
             {
@@ -556,13 +556,13 @@ decode_short_term_rps( bitstream_t *bitstream, int32_t idx, reference_picture_se
             if( i_ref_idc == 1 || i_ref_idc == 2 )
             {
                 int32_t i_delta_poc = i_delta_rps + ( i_idx < p_rps_ref->i_num_pictures ? p_rps_ref->ai_delta_poc[ i_idx ] : 0 );
-                
+
                 p_rps->ai_delta_poc[ k ] = i_delta_poc;
                 p_rps->ab_used[ k ] = i_ref_idc == 1;
-                
+
                 if( i_delta_poc < 0 )
                     k0++;
-                else 
+                else
                     k1++;
                 k++;
             }
@@ -608,7 +608,7 @@ decode_short_term_rps( bitstream_t *bitstream, int32_t idx, reference_picture_se
 
         p_rps->i_num_negativePictures = bitstream_read_uvlc( bitstream );
         p_rps->i_num_positivePictures = bitstream_read_uvlc( bitstream );
-        
+
         for( i_idx=0 ; i_idx < p_rps->i_num_negativePictures; i_idx++ )
         {
             i_code = bitstream_read_uvlc( bitstream );  /* delta_poc_s0_minus1 */
@@ -631,11 +631,11 @@ decode_short_term_rps( bitstream_t *bitstream, int32_t idx, reference_picture_se
     }
 }
 
-void 
+void
 on_got_sps( sequence_parameter_set_t *p_sps_new, hevc_decode_t *p_context )
 {
     sequence_parameter_set_t *p_sps = &p_context->as_sps[ p_sps_new->i_id ];
-    
+
     if( p_sps->b_init )
     {
         return;
@@ -713,7 +713,7 @@ void decode_vui( hevc_decode_t *context, sequence_parameter_set_t *p_sps, hevc_n
 
         if( p_vui->b_vui_poc_proportional_to_timing_flag )
             p_vui->i_vui_num_ticks_poc_diff_one_minus1 = bitstream_read_uvlc( &p_nalu->bitstream );
-        
+
         p_vui->b_hrd_parameters = bitstream_read( &p_nalu->bitstream, 1 );
 
         if( p_vui->b_hrd_parameters )
@@ -739,9 +739,9 @@ void decode_vui( hevc_decode_t *context, sequence_parameter_set_t *p_sps, hevc_n
 
                 if( p_vui->b_sub_pic_cpb_params )
                     p_vui->i_du_cpb_size_scale = bitstream_read( &p_nalu->bitstream, 4 ); /* du_cpb_size_scale */
-                
+
                 p_vui->i_initial_cpb_removal_delay_length_minus1 = bitstream_read( &p_nalu->bitstream, 5 );
-                p_vui->i_cpb_removal_delay_length_minus1 = bitstream_read( &p_nalu->bitstream, 5 );    
+                p_vui->i_cpb_removal_delay_length_minus1 = bitstream_read( &p_nalu->bitstream, 5 );
                 p_vui->m_dpbOutputDelayLengthMinus1 = bitstream_read( &p_nalu->bitstream, 5 );
             }
 
@@ -753,7 +753,7 @@ void decode_vui( hevc_decode_t *context, sequence_parameter_set_t *p_sps, hevc_n
                     p_vui->as_hrd[ i_idx ].b_fixed_pic_rate_within_cvs_flag = bitstream_read( &p_nalu->bitstream, 1 );
                 else
                     p_vui->as_hrd[ i_idx ].b_fixed_pic_rate_within_cvs_flag = true;
-                
+
                 p_vui->as_hrd[ i_idx ].b_low_delay_hrd = false;
                 p_vui->as_hrd[ i_idx ].i_cpb_cnt_minus1 = 0;
 
@@ -761,10 +761,10 @@ void decode_vui( hevc_decode_t *context, sequence_parameter_set_t *p_sps, hevc_n
                     p_vui->as_hrd[ i_idx ].i_elemental_duration_in_tc_minus1 = bitstream_read_uvlc( &p_nalu->bitstream );
                 else
                     p_vui->as_hrd[ i_idx ].b_low_delay_hrd = bitstream_read( &p_nalu->bitstream, 1 );
-                
+
                 if( !p_vui->as_hrd[ i_idx ].b_low_delay_hrd )
                     p_vui->as_hrd[ i_idx ].i_cpb_cnt_minus1 = bitstream_read_uvlc( &p_nalu->bitstream );
-                
+
                 for( i_nal_or_vcl = 0; i_nal_or_vcl < 2; i_nal_or_vcl++ )
                 {
                     if( ( ( i_nal_or_vcl == 0 ) && ( p_vui->b_nal_hrd_parameters ) ) ||
@@ -846,7 +846,7 @@ void sao_create_context( sao_context_t *p_sao, int32_t i_bits_luma, int32_t i_bi
     p_sao->i_bit_increase_chroma = p_sao->i_bits_chroma - HEVC_MIN( p_sao->i_bits_chroma, 10 );
 
     p_sao->pi_bo_offsets = (int32_t *)malloc( (i_max_luma + ((i_max_luma>>1)<<1)) * sizeof(int32_t) );
-    
+
     p_sao->pi_bo_luma = (int32_t *)malloc( sizeof(int32_t) * ((1LL<<p_sao->i_bits_luma) + 1) );
     for( i_idx=0; i_idx < 1<<p_sao->i_bits_luma; i_idx++ )
         p_sao->pi_bo_luma[ i_idx ] = 1 + ( i_idx >> (p_sao->i_bits_luma - SAO_BO_BITS) );
@@ -907,13 +907,13 @@ int32_t g_quantInterDefault8x8[64] =
     24,25,28,33,41,54,71,91
 };
 uint32_t g_scanDiag4x4[ 16 ] = {
-    0, 4, 1, 8, 
-    5, 2, 12, 9, 
-    6, 3, 13, 10, 
-    7, 14, 11, 15, 
+    0, 4, 1, 8,
+    5, 2, 12, 9,
+    6, 3, 13, 10,
+    7, 14, 11, 15,
 };
 
-int32_t g_scalingListSize[ 4 ] = { 16, 64, 256, 1024 }; 
+int32_t g_scalingListSize[ 4 ] = { 16, 64, 256, 1024 };
 int32_t gai_scaling_list_size_x[ 4 ] = { 4, 8, 16, 32 };
 int32_t gai_scaling_list_num[ SCALING_LIST_SIZE_NUM ] = { 6, 6, 6, 2 };
 int32_t g_eTTable[ 4 ] = { 0, 3, 1, 2 };
@@ -946,8 +946,8 @@ void decode_scaling_list( scaling_list_t *p_scaling_list, bitstream_t *bitstream
                 p_scaling_list->ai_ref_matrix_idx[ ui_size ][ i_list_idx ] = (uint32_t)( i_list_idx - i_code );
 
                 if( (uint32_t)p_scaling_list->ai_ref_matrix_idx[ ui_size ][ i_list_idx ] > SCALING_LIST_NUM )
-                    long_jump( HEVCDEC_EXC_INTERNAL, "Invalid scaling list" );    
-                
+                    long_jump( HEVCDEC_EXC_INTERNAL, "Invalid scaling list" );
+
                 if( ui_size > SCALING_LIST_8x8 )
                 {
                     p_scaling_list->ai_scaling_list_dc[ ui_size ][ i_list_idx ] = i_list_idx == p_scaling_list->ai_ref_matrix_idx[ ui_size ][ i_list_idx ] ? 16
@@ -979,7 +979,7 @@ void decode_scaling_list( scaling_list_t *p_scaling_list, bitstream_t *bitstream
                 for( i_idx = 0; i_idx < i_coef_n; i_idx++ )
                 {
                     i_data = bitstream_read_svlc( bitstream ); /* scaling_list_delta_coef */
-                    i_next = ( i_next + i_data + 256 ) & 0xff; 
+                    i_next = ( i_next + i_data + 256 ) & 0xff;
                     pi_dst[ pui_scan[i_idx] ] = i_next;
                 }
             }
@@ -987,8 +987,8 @@ void decode_scaling_list( scaling_list_t *p_scaling_list, bitstream_t *bitstream
     }
 }
 
-void 
-decode_sps( hevc_decode_t *context, hevc_nalu_t *p_nalu ) 
+void
+decode_sps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
 {
     int32_t i_idx;
     bool b_subLayerOrderingInfoPresentFlag;
@@ -1027,7 +1027,7 @@ decode_sps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
         sps->i_pic_conf_win_bottom_offset = (int16_t)( i_chroma_ss_factor * bitstream_read_uvlc( &p_nalu->bitstream ) );
 
 
-        if( 0 >= sps->i_pic_luma_width - sps->i_pic_conf_win_left_offset - sps->i_pic_conf_win_right_offset 
+        if( 0 >= sps->i_pic_luma_width - sps->i_pic_conf_win_left_offset - sps->i_pic_conf_win_right_offset
             || 0 >= sps->i_pic_luma_height - sps->i_pic_conf_win_top_offset - sps->i_pic_conf_win_bottom_offset )
             long_jump( HEVCDEC_EXC_SYNTAX_ERROR, "bad cropping values" );
     }
@@ -1045,7 +1045,7 @@ decode_sps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
     b_subLayerOrderingInfoPresentFlag = bitstream_read( &p_nalu->bitstream, 1 );    /* sps_sub_layer_ordering_info_present_flag */
 
     for( i_idx = 0; i_idx < sps->i_max_temporal_layers; i_idx++ )
-    {    
+    {
         sps->ai_max_dec_pic_buffering[ i_idx ] = 1 + bitstream_read_uvlc( &p_nalu->bitstream );
         sps->ai_num_reorder_pics[ i_idx ] = bitstream_read_uvlc( &p_nalu->bitstream );
         sps->max_latency_increase[ i_idx ] = bitstream_read_uvlc( &p_nalu->bitstream );
@@ -1133,7 +1133,7 @@ decode_sps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
     if( bitstream_read( &p_nalu->bitstream, 1 ) )
     {
         /* sps_extension_data_flag */
-        while( more_rbsp_data( &p_nalu->bitstream ) )    
+        while( more_rbsp_data( &p_nalu->bitstream ) )
             bitstream_read( &p_nalu->bitstream, 1 );
     }
 
@@ -1159,7 +1159,7 @@ decode_sps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
 }
 
 
-void 
+void
 decode_pps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
 {
     int32_t i_idx;
@@ -1232,7 +1232,7 @@ decode_pps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
     }
     else
     {
-        pps->i_tile_columns = pps->i_tile_rows = 0;        
+        pps->i_tile_columns = pps->i_tile_rows = 0;
     }
 
     pps->b_loop_filter_across_slices = bitstream_read( &p_nalu->bitstream, 1 );
@@ -1271,14 +1271,14 @@ decode_pps( hevc_decode_t *context, hevc_nalu_t *p_nalu )
     pps->b_isDefined= true;
 }
 
-int32_t 
+int32_t
 get_num_rps_curr_temp_list( slice_t *p_slice )
 {
     int32_t i_num_rps_curr_temp_list = 0, i_idx;
 
     if( p_slice->e_type == I_SLICE )
         return 0;
-    
+
     for( i_idx=0; i_idx < p_slice->p_rps->i_num_negativePictures + p_slice->p_rps->i_num_positivePictures + p_slice->p_rps->i_num_longtermPictures; i_idx++ )
     {
         if( p_slice->p_rps->ab_used[ i_idx ] )
@@ -1330,7 +1330,7 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
         p_slice->b_dependent = bitstream_read( &p_nalu->bitstream, 1 ) == 1;
     else
         p_slice->b_dependent = false;
-    
+
     p_slice->i_temp_hier = p_nalu->i_temporal_id;
 
     if ((p_slice->p_sps->i_max_cu_width == 0) || (p_slice->p_sps->i_max_cu_height == 0))
@@ -1343,7 +1343,7 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
         * ( ( p_slice->p_sps->i_pic_luma_height + p_slice->p_sps->i_max_cu_height - 1 ) / p_slice->p_sps->i_max_cu_height );
     i_max_parts = 1<<( p_slice->p_sps->i_max_cu_depth<<1 );
     i_num_parts = 0;
-    
+
     while( i_num_ctus>(1<<i_req_bits_outer) ) i_req_bits_outer++;
 
     if( !p_slice->b_1st_slice )
@@ -1357,24 +1357,24 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
     p_slice->i_end_cu_addr = i_num_ctus * i_max_parts;
 
     if( !p_slice->b_dependent )
-    {    
+    {
         if( p_slice->p_pps->i_num_extra_slice_header_bits )
             bitstream_read( bitstream, p_slice->p_pps->i_num_extra_slice_header_bits );
-        
+
         p_slice->e_type = (slice_type_t)bitstream_read_uvlc( bitstream ); /* slice_type */
 
         if( p_slice->p_pps->b_output_flag_present )
             p_slice->b_pic_output = 0 != bitstream_read( bitstream, 1 ); /* pic_output_flag */
         else
             p_slice->b_pic_output = true;
-    
-    
+
+
         if( p_nalu->e_nalu_type == NAL_UNIT_CODED_SLICE_IDR_W_RADL || p_nalu->e_nalu_type == NAL_UNIT_CODED_SLICE_IDR_N_LP )
         {
             context->i_prev_poc = p_slice->i_poc;
             if( 0 == p_slice->i_temp_hier && reference_nalu( p_nalu ) && p_nalu->e_nalu_type != NAL_UNIT_CODED_SLICE_RASL_R && p_nalu->e_nalu_type != NAL_UNIT_CODED_SLICE_RADL_R )
                 context->i_prev_tid0_poc = context->i_prev_poc;
-        
+
             p_slice->i_poc = 0;
             p_slice->s_rps_local.i_num_negativePictures = 0;
             p_slice->s_rps_local.i_num_positivePictures = 0;
@@ -1398,7 +1398,7 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
             {
                 i_poc_msb = i_prev_poc_msb + i_max_poc_lsb;
             }
-            else if( i_poc_lsb > i_prev_poc_lsb && (i_poc_lsb - i_prev_poc_lsb) > i_max_poc_lsb / 2 ) 
+            else if( i_poc_lsb > i_prev_poc_lsb && (i_poc_lsb - i_prev_poc_lsb) > i_max_poc_lsb / 2 )
             {
                 i_poc_msb = i_prev_poc_msb - i_max_poc_lsb;
             }
@@ -1415,7 +1415,7 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
                 /** For BLA/BLANT, POCmsb is set to 0. Na denn macht mal. */
                 i_poc_msb = 0;
             }
-            
+
             p_slice->i_poc = i_poc_msb + i_poc_lsb;
             if( 0 == p_slice->i_temp_hier ) context->i_prev_poc = p_slice->i_poc;
             if( 0 == p_slice->i_temp_hier && reference_nalu( p_nalu ) && p_nalu->e_nalu_type != NAL_UNIT_CODED_SLICE_RASL_R && p_nalu->e_nalu_type != NAL_UNIT_CODED_SLICE_RADL_R )
@@ -1433,12 +1433,12 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
                 int32_t numBits = 0, i_short_term_ref_pic_set_idx;
                 while( (1 << numBits) < p_slice->p_sps->i_num_short_term_ref_pic_sets )
                     numBits++;
-                
+
                 if( numBits )
                     i_short_term_ref_pic_set_idx = bitstream_read( bitstream, numBits );
                 else
                     i_short_term_ref_pic_set_idx = 0;
-                
+
                 p_slice->p_rps = &p_slice->p_sps->pps_rps_list[ i_short_term_ref_pic_set_idx ];
                 p_rps = p_slice->p_rps;
             }
@@ -1462,10 +1462,10 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
 
                 while( p_slice->p_sps->i_num_long_term_ref_pic_sets > (1 << i_bits_for_ltrp_sps) )
                     i_bits_for_ltrp_sps++;
-            
+
                 p_slice->p_rps->i_num_longtermPictures = bitstream_read_uvlc( bitstream ); /* num_long_term_pics */
                 i_num_ltrp += p_slice->p_rps->i_num_longtermPictures;
-            
+
                 for( i_idx=i_offset+p_slice->p_rps->i_num_longtermPictures-1, k = 0; k < i_num_ltrp; i_idx--, k++ )
                 {
                     int32_t pocLsbLt;
@@ -1487,24 +1487,24 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
                         pocLsbLt = bitstream_read( bitstream, p_slice->p_sps->i_log2_max_pic_order_cnt_lsb ); /* poc_lsb_lt */
                         p_slice->p_rps->ab_used[ i_idx ] = bitstream_read( bitstream, 1 ); /* used_by_curr_pic_lt_flag */
                     }
-                
+
                     /* delta_poc_msb_present_flag */
-                    if( bitstream_read( bitstream, 1 ) )                  
+                    if( bitstream_read( bitstream, 1 ) )
                     {
                         int32_t i_pocLTCurr;
                         int32_t i_code = bitstream_read_uvlc( bitstream ); /* delta_poc_msb_cycle_lt[i] */
                         bool deltaFlag = false;
-                    
+
                         if( i_idx == i_offset+p_slice->p_rps->i_num_longtermPictures-1 || i_idx == i_offset+i_num_ltrp-i_num_ltrp_sps-1 )
                             deltaFlag = true;
-                    
+
                         if( deltaFlag )
                             i_delta_poc_msb_cycle_lt = i_code;
                         else
-                            i_delta_poc_msb_cycle_lt = i_code + i_prev_delta_msb;              
-                    
+                            i_delta_poc_msb_cycle_lt = i_code + i_prev_delta_msb;
+
                         i_pocLTCurr = p_slice->i_poc - i_delta_poc_msb_cycle_lt * i_max_poc_lsb - i_poc_lsb + pocLsbLt;
-                        p_slice->p_rps->ai_poc[ i_idx ] = i_pocLTCurr; 
+                        p_slice->p_rps->ai_poc[ i_idx ] = i_pocLTCurr;
                         p_slice->p_rps->ai_delta_poc[ i_idx ] = -p_slice->i_poc + i_pocLTCurr;
                         p_slice->p_rps->ab_ltmsb[ i_idx ] = true;
                     }
@@ -1541,17 +1541,17 @@ bool parse_slice_header( hevc_decode_t *context, hevc_nalu_t *p_nalu, slice_t *p
             if( p_slice->p_sps->b_temporal_mvp )
                 p_slice->b_temporal_mvp = bitstream_read( bitstream, 1 ); /* slice_temporal_mvp_enable_flag */
         }
-    } 
+    }
 
     return true;
 }
 
-bool 
+bool
 gop_decode_slice( hevc_decode_t *context, hevc_nalu_t *p_nalu )
 {
     slice_t s_slice;
     bool ret = 0;
-    
+
     if( context->i_curr_sps_idx < 0 )
         assert( !"Slice w/a SPS" );
 
@@ -1624,7 +1624,7 @@ void decode_sei_nalu( hevc_decode_t *p_context, hevc_nalu_t *p_nalu )
         payloadSize = 0;
         for( byte = 0xff; 0xff == byte; )
             payloadSize += byte = (uint8_t)bitstream_read( &p_nalu->bitstream, 8 );
-                
+
         switch( e_payload_type )
         {
             case SEI_USER_DATA_REGISTERED_ITU_T_T35:
@@ -1680,5 +1680,3 @@ void decode_sei_nalu( hevc_decode_t *p_context, hevc_nalu_t *p_nalu )
         }
     }while( p_nalu->bitstream.i64_bits_available > 2 );
 }
-
-
