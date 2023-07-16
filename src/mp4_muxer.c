@@ -5121,7 +5121,7 @@ show_chunk_output_progress(track_handle_t track, uint64_t dts, progress_handle_t
         }
         msglog(NULL, MSGLOG_DEBUG, "%2u", track->es_idx);
     }
-    else if (prgh && msglog_global_verbosity_get() >= MSGLOG_INFO)
+    else if (prgh && msglog_global_verbosity_get() >= MSGLOG_QUIET)
     {
         prgh->show(prgh, chunk_idx+1);
     }
@@ -6123,7 +6123,7 @@ write_mdat_box(bbio_handle_t snk, mp4_ctrl_handle_t muxer)
 
     /** write out chunks in interleave mode */
     msglog(NULL, MSGLOG_INFO, ", %u chunks:\n", muxer->chunk_num);
-    prgh    = progress_create("  written", muxer->chunk_num);
+    prgh    = progress_create("written", muxer->chunk_num);
     dts_out = 0;
 
     /** init chunk list iterator */
@@ -6207,7 +6207,10 @@ write_mdat_box(bbio_handle_t snk, mp4_ctrl_handle_t muxer)
     }
 
     prgh->destroy(prgh);
-    msglog(NULL, MSGLOG_INFO, "\n");
+    if (msglog_global_verbosity_get() > MSGLOG_QUIET)
+    {
+        fprintf(stdout, "\n");
+    }
 
     return ret;
 }

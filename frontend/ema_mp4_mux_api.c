@@ -253,7 +253,7 @@ mux_es_parsing(ema_mp4_ctrl_handle_t handle, uint32_t es_idx, uint32_t dv_el_fla
         if (!ret)
         {
             /** REPORT_PARSING_PROGRESS */
-            if (msglog_global_verbosity_get() >= MSGLOG_INFO)
+            if (msglog_global_verbosity_get() > MSGLOG_QUIET)
             {
                 if (msglog_global_verbosity_get() != MSGLOG_DEBUG)
                 {
@@ -286,7 +286,11 @@ mux_es_parsing(ema_mp4_ctrl_handle_t handle, uint32_t es_idx, uint32_t dv_el_fla
             msglog(NULL, MSGLOG_INFO, "EMAJ: done");
         }
     }
-    msglog(NULL, MSGLOG_INFO, "\n");
+
+    if (msglog_global_verbosity_get() > MSGLOG_QUIET)
+    {
+        fprintf(stdout, "\n");
+    }
 
     prgh->destroy(prgh);
     sample->destroy(sample);
@@ -491,7 +495,10 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
         usr_cfg_es = &(handle->usr_cfg_ess[es_idx]);
         handle->mp4_handle->curr_usr_cfg_stream_index = es_idx;
 
-        fprintf(stdout, "[%d/%d] Parsing track \"%s\"... \n", es_idx + 1, steps, usr_cfg_es->input_fn);
+        if (msglog_global_verbosity_get() > MSGLOG_QUIET)
+        {
+            fprintf(stdout, "[%d/%d] Parsing track \"%s\"... \n", es_idx + 1, steps, usr_cfg_es->input_fn);
+        }
 
         /** check if track to add, delete, replace does even exist */
         if (usr_cfg_es->mp4_tid > handle->usr_cfg_mux.es_num)
@@ -578,7 +585,10 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
         }
     }
 
-    fprintf(stdout, "[%d/%d] Saving output file(s) \"%s\"... \n", steps, steps, handle->usr_cfg_mux.output_fn);
+    if (msglog_global_verbosity_get() > MSGLOG_QUIET)
+    {
+        fprintf(stdout, "[%d/%d] Saving output file(s) \"%s\"... \n", steps, steps, handle->usr_cfg_mux.output_fn);
+    }
 
     /**** the summary part of mp4 file is ready and output */
     msglog(NULL, MSGLOG_INFO, "Output headers\n");
