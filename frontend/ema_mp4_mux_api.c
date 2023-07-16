@@ -489,6 +489,8 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
         usr_cfg_es = &(handle->usr_cfg_ess[es_idx]);
         handle->mp4_handle->curr_usr_cfg_stream_index = es_idx;
 
+        fprintf(stdout, "[%d/%d] Parsing track \"%s\"... \n", es_idx + 1, handle->usr_cfg_mux.es_num + 1, usr_cfg_es->input_fn);
+
         /** check if track to add, delete, replace does even exist */
         if (usr_cfg_es->mp4_tid > handle->usr_cfg_mux.es_num)
         {
