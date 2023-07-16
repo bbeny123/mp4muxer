@@ -17,7 +17,7 @@
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ************************************************************************************************************/
@@ -33,7 +33,7 @@
 #include "dsi.h"
 #include "parser.h"
 #include "mp4_muxer.h"
-#include "ema_mp4_ifc.h" 
+#include "ema_mp4_ifc.h"
 
 
 /**** Creates a data sink */
@@ -148,7 +148,7 @@ mux_data_src_destroy(bbio_handle_t data_srcs[])
 }
 
 /**
- * find the right parser based on the input source file extension (currently, only support choosing parser from file name extension) 
+ * find the right parser based on the input source file extension (currently, only support choosing parser from file name extension)
  */
 static int32_t
 mux_es_parser_create(ema_mp4_ctrl_handle_t handle, uint32_t es_idx, parser_handle_t* p_parser, uint32_t dv_el_track_flag)
@@ -221,7 +221,7 @@ mux_es_parsing(ema_mp4_ctrl_handle_t handle, uint32_t es_idx, uint32_t dv_el_fla
     track = mp4_muxer_get_track(handle->mp4_handle, handle->usr_cfg_ess[es_idx].track_ID);
     if (!track)
     {
-        return EMA_MP4_MUXED_BUGGY; 
+        return EMA_MP4_MUXED_BUGGY;
     }
 
     parser = track->parser;
@@ -417,7 +417,7 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
         if (usr_cfg_mux_ptr->frag_range_max == 0)
         {
             /** DASH sepc suggested fragment duration is 2s. */
-            usr_cfg_mux_ptr->frag_range_max = 2000; 
+            usr_cfg_mux_ptr->frag_range_max = 2000;
         }
         if (usr_cfg_mux_ptr->frag_range_min == 0)
         {
@@ -430,18 +430,18 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
 
         if (handle->usr_cfg_mux.output_format == OUTPUT_FORMAT_DASH)
         {
-            if (usr_cfg_mux_ptr->dash_profile == OnDemand) 
+            if (usr_cfg_mux_ptr->dash_profile == OnDemand)
             {
                 usr_cfg_mux_ptr->frag_cfg_flags |= ISOM_FRAGCFG_WRITE_SIDX;
                 FREE_CHK((int8_t *)usr_cfg_mux_ptr->compatible_brands);
                 usr_cfg_mux_ptr->compatible_brands = STRDUP_CHK("mp42dashdby1msdhmsixiso5isom");
-            } 
-            else if (usr_cfg_mux_ptr->dash_profile == Main) 
+            }
+            else if (usr_cfg_mux_ptr->dash_profile == Main)
             {
                 FREE_CHK((int8_t *)usr_cfg_mux_ptr->compatible_brands);
                 usr_cfg_mux_ptr->compatible_brands = STRDUP_CHK("mp42dashdby1msdhiso5isom");
-            } 
-            else if (usr_cfg_mux_ptr->dash_profile == Live || usr_cfg_mux_ptr->dash_profile == HbbTV) 
+            }
+            else if (usr_cfg_mux_ptr->dash_profile == Live || usr_cfg_mux_ptr->dash_profile == HbbTV)
             {
                 FREE_CHK((int8_t *)usr_cfg_mux_ptr->compatible_brands);
                 usr_cfg_mux_ptr->compatible_brands = STRDUP_CHK("mp42dashdby1iso5isom");
@@ -480,7 +480,7 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
         ret = mux_data_src_create(handle, es_idx);
         CHK_ERR_RET(ret);
     }
-    
+
     /**** write all other boxes */
 
     /** parsing all ES source */
@@ -502,7 +502,7 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
             parser_handle_t parser = 0;
 
             ret = mux_es_parser_create(handle, es_idx, &parser, 0);
-                
+
             /** When loop gets already aborted here the locally allocated parser does not get assigned
                 to any track (aborting loop before calling mp4_muxer_add_track) and hence the parser
                 can never get freed as it is only present in local scope. So it must be done here. */
@@ -526,7 +526,7 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
                 handle->usr_cfg_ess[es_idx].alternate_group = 2;
                 if(has_audio)
                     handle->usr_cfg_ess[es_idx].force_tkhd_flags &=  0xE;
-                has_audio = 1;            
+                has_audio = 1;
             }
 
             /** add a track to muxer */
@@ -549,7 +549,7 @@ ema_mp4_mux_start(ema_mp4_ctrl_handle_t handle)
             msglog(NULL, MSGLOG_INFO, "Time lapse %lds\n", ltime_e - ltime_s);
 
             /** dolby vision el track parser*/
-            if((((handle->usr_cfg_mux.dv_track_mode == DUAL) && (handle->usr_cfg_mux.dv_es_mode == SPLIT))) 
+            if((((handle->usr_cfg_mux.dv_track_mode == DUAL) && (handle->usr_cfg_mux.dv_es_mode == SPLIT)))
                 && ((IS_FOURCC_EQUAL(parser->dsi_FourCC, "avcC")) || (IS_FOURCC_EQUAL(parser->dsi_FourCC, "hvcC"))))
             {
                 es_idx ++;
@@ -740,12 +740,12 @@ ema_mp4_mux_destroy(ema_mp4_ctrl_handle_t handle)
 }
 
 uint32_t
-ema_mp4_mux_set_input(ema_mp4_ctrl_handle_t handle, 
-                      int8_t *fn, 
-                      int8_t *lang, 
-                      int8_t *enc_name, 
-                      uint32_t time_scale, 
-                      uint32_t chunk_span_size, 
+ema_mp4_mux_set_input(ema_mp4_ctrl_handle_t handle,
+                      int8_t *fn,
+                      int8_t *lang,
+                      int8_t *enc_name,
+                      uint32_t time_scale,
+                      uint32_t chunk_span_size,
                       uint32_t tid)
 {
     usr_cfg_es_t *usr_cfg_es;
@@ -797,14 +797,14 @@ ema_mp4_mux_set_input(ema_mp4_ctrl_handle_t handle,
 
         usr_cfg_es->lang            = (lang) ? STRDUP_CHK(lang) : 0;
     }
-    
+
     usr_cfg_es->enc_name        = (enc_name) ? STRDUP_CHK(enc_name) : 0;
     /** chunk_span_size: 0 means no chunk span control by size */
     usr_cfg_es->chunk_span_size = 0;
     usr_cfg_es->mp4_tid         = tid;
     usr_cfg_es->warp_media_timescale = time_scale;
     /** mark for add */
-    usr_cfg_es->action = TRACK_EDIT_ACTION_ADD;  
+    usr_cfg_es->action = TRACK_EDIT_ACTION_ADD;
     handle->usr_cfg_mux.es_num++;
 
     return EMA_MP4_MUXED_OK;
@@ -910,7 +910,7 @@ ema_mp4_mux_set_cbrand(ema_mp4_ctrl_handle_t handle, const int8_t *cbrand)
 uint32_t
 ema_mp4_mux_set_withopt(ema_mp4_ctrl_handle_t handle, const int8_t *opt)
 {
-    if (!OSAL_STRCASECMP(opt, "64")) 
+    if (!OSAL_STRCASECMP(opt, "64"))
     {
         handle->usr_cfg_mux.withopt |= 0x1;  /** the only withopt for now */
     }
@@ -921,15 +921,15 @@ ema_mp4_mux_set_withopt(ema_mp4_ctrl_handle_t handle, const int8_t *opt)
 uint32_t
 ema_mp4_mux_set_sd(ema_mp4_ctrl_handle_t handle, const int8_t *sd)
 {
-    if (!OSAL_STRCASECMP(sd,"single"))        
+    if (!OSAL_STRCASECMP(sd,"single"))
     {
         handle->usr_cfg_mux.sd = 0x0;
     }
-    else if (!OSAL_STRCASECMP(sd,"multiple")) 
+    else if (!OSAL_STRCASECMP(sd,"multiple"))
     {
         handle->usr_cfg_mux.sd = 0x1;
     }
-    else 
+    else
     {
         return EMA_MP4_MUXED_PARAM_ERR;
     }
@@ -944,39 +944,39 @@ ema_mp4_mux_set_db_level(ema_mp4_ctrl_handle_t handle, int8_t *lvl)
 
     (void)handle;
 
-    if (!OSAL_STRCASECMP(lvl, "quiet"))        
+    if (!OSAL_STRCASECMP(lvl, "quiet"))
     {
         level = MSGLOG_QUIET;
     }
-    else if (!OSAL_STRCASECMP(lvl, "panic"))   
+    else if (!OSAL_STRCASECMP(lvl, "panic"))
     {
         level = MSGLOG_EMERG;
     }
-    else if (!OSAL_STRCASECMP(lvl, "fatal"))   
+    else if (!OSAL_STRCASECMP(lvl, "fatal"))
     {
         level = MSGLOG_CRIT;
     }
-    else if (!OSAL_STRCASECMP(lvl, "error"))   
+    else if (!OSAL_STRCASECMP(lvl, "error"))
     {
         level = MSGLOG_ERR;
     }
-    else if (!OSAL_STRCASECMP(lvl, "warning")) 
+    else if (!OSAL_STRCASECMP(lvl, "warning"))
     {
         level = MSGLOG_WARNING;
     }
-    else if (!OSAL_STRCASECMP(lvl, "info"))    
+    else if (!OSAL_STRCASECMP(lvl, "info"))
     {
         level = MSGLOG_INFO;
     }
-    else if (!OSAL_STRCASECMP(lvl, "verbose")) 
+    else if (!OSAL_STRCASECMP(lvl, "verbose"))
     {
         level = MSGLOG_DEBUG;  /** verbose no longer supported */
     }
-    else if (!OSAL_STRCASECMP(lvl, "debug"))   
+    else if (!OSAL_STRCASECMP(lvl, "debug"))
     {
         level = MSGLOG_DEBUG;
     }
-    else                                       
+    else
     {
         level = msglog_global_verbosity_get();  /** unchanged */
     }
@@ -991,10 +991,10 @@ ema_mp4_mux_set_output_format(ema_mp4_ctrl_handle_t handle, const int8_t *outfm)
 {
     if (!outfm)
     {
-        return EMA_MP4_MUXED_PARAM_ERR; 
+        return EMA_MP4_MUXED_PARAM_ERR;
     }
 
-    if (OSAL_STRCASECMP(outfm, "frag-mp4") && OSAL_STRCASECMP(outfm, "mp4")) 
+    if (OSAL_STRCASECMP(outfm, "frag-mp4") && OSAL_STRCASECMP(outfm, "mp4"))
     {
         return EMA_MP4_MUXED_PARAM_ERR;
     }
@@ -1011,7 +1011,7 @@ ema_mp4_mux_set_output_format(ema_mp4_ctrl_handle_t handle, const int8_t *outfm)
     return EMA_MP4_MUXED_OK;
 }
 
-uint32_t 
+uint32_t
 ema_mp4_mux_set_max_duration(ema_mp4_ctrl_handle_t handle, uint32_t max_duration)
 {
     handle->usr_cfg_mux.frag_range_max = max_duration;
@@ -1023,9 +1023,9 @@ ema_mp4_mux_set_max_duration(ema_mp4_ctrl_handle_t handle, uint32_t max_duration
 uint32_t
 ema_mp4_mux_set_video_framerate(ema_mp4_ctrl_handle_t handle, uint32_t nome, uint32_t deno)
 {
-    handle->usr_cfg_mux.ext_timing_info.override_timing   = 1;       
+    handle->usr_cfg_mux.ext_timing_info.override_timing   = 1;
     handle->usr_cfg_mux.ext_timing_info.time_scale        = nome;
-    handle->usr_cfg_mux.ext_timing_info.num_units_in_tick = deno;     
+    handle->usr_cfg_mux.ext_timing_info.num_units_in_tick = deno;
 
     return EMA_MP4_MUXED_OK;
 }
@@ -1035,7 +1035,7 @@ ema_mp4_mux_set_dv_es_mode(ema_mp4_ctrl_handle_t handle, const int8_t *mode)
 {
     if (!mode)
     {
-        return EMA_MP4_MUXED_PARAM_ERR;  
+        return EMA_MP4_MUXED_PARAM_ERR;
     }
 
     if (!OSAL_STRCASECMP(mode, "split"))
@@ -1050,16 +1050,16 @@ ema_mp4_mux_set_dv_es_mode(ema_mp4_ctrl_handle_t handle, const int8_t *mode)
     }
     else
     {
-        return EMA_MP4_MUXED_PARAM_ERR; 
+        return EMA_MP4_MUXED_PARAM_ERR;
     }
 
     return EMA_MP4_MUXED_OK;
 }
 
-uint32_t 
+uint32_t
 ema_mp4_mux_set_dv_profile(ema_mp4_ctrl_handle_t handle, int32_t profile)
 {
-    if ((profile == 4) || (profile == 5) || (profile >= 7) && (profile <= 9)) 
+    if ((profile == 4) || (profile == 5) || (profile >= 7) && (profile <= 9))
     {
 		handle->usr_cfg_mux.ext_timing_info.ext_dv_profile = (uint8_t)profile;
         return EMA_MP4_MUXED_OK;
@@ -1073,7 +1073,7 @@ ema_mp4_mux_set_dv_profile(ema_mp4_ctrl_handle_t handle, int32_t profile)
 uint32_t
 ema_mp4_mux_set_dv_bl_compatible_id(ema_mp4_ctrl_handle_t handle, int32_t compatible_id)
 {
-	if ((compatible_id >= 0) && (compatible_id <= 6)) 
+	if ((compatible_id >= 0) && (compatible_id <= 6))
     {
         handle->usr_cfg_mux.ext_timing_info.ext_dv_bl_compatible_id = (uint8_t)compatible_id;
         return EMA_MP4_MUXED_OK;
