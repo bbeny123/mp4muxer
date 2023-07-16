@@ -20,11 +20,20 @@ The "dlb_mp4base" folder consists of:
 
 ### Prerequisites
 
-For Windows platform development, Visual Studio 2010 must be installed with SP1.
+For Windows platform development, msbuild must be installed: https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2022
 
 ### Building instructions
 
-#### Using the makefiles (on Linux and MacOS)
+#### Using the msbuild (on Windows)
+
+    Install msbuild:
+    https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2022
+
+    From a cmd execute (depending on your machine architecture):
+    - for windows_amd64: "msbuild make\mp4muxer\windows_amd64\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
+    - for windows_x86: "msbuild make\mp4muxer\windows_x86\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
+
+#### Using the makefiles (on Linux and MacOS) - Untested
 
     After cloning the dlb_mp4base repository to your local machine, go to the appropriate directory, depending on your machine OS and architecture, such as:
     "cd dlb_mp4base/make/mp4muxer<architecture>"
@@ -32,15 +41,6 @@ For Windows platform development, Visual Studio 2010 must be installed with SP1.
     Then build one of the following make targets:
     "make mp4muxer_release"
     "make mp4muxer_debug"
-
-#### Using the Visual Studio Solutions(on Windows)
-
-    Install msbuild:
-    https://learn.microsoft.com/en-us/visualstudio/msbuild/msbuild?view=vs-2022
-
-    From a cmd execute:
-    - for windows_amd64 build: "msbuild make\mp4muxer\windows_amd64\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
-    - for windows_x86 build: "msbuild make\mp4muxer\windows_x86\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
 
 ## Release Notes
 
