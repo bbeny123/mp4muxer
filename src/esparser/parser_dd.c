@@ -17,7 +17,7 @@
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE.
  ************************************************************************************************************/
@@ -564,7 +564,7 @@ parse_ec3_substream(bbio_handle_t bs, parser_dd_handle_t parser_dd)
             _REPORT(REPORT_LEVEL_WARN, "EC-3: Illegal change of bsmod detected.");
         }
         substrm->bsmod = bsmod;
-        
+
         src_skip_bits(bs, 1); /* copyrightb */
         src_skip_bits(bs, 1); /* origbs */
         if (acmod == 0x2) /* if in 2/0 mode */
@@ -572,7 +572,7 @@ parse_ec3_substream(bbio_handle_t bs, parser_dd_handle_t parser_dd)
             src_skip_bits(bs, 2); /* dsurmod */
             src_skip_bits(bs, 2); /* dheadphonmod */
         }
-        else if(acmod >= 0x6) /* if both surround channels exist */ 
+        else if(acmod >= 0x6) /* if both surround channels exist */
         {
             src_skip_bits(bs, 2); /* dsurexmod */
         }
@@ -594,13 +594,13 @@ parse_ec3_substream(bbio_handle_t bs, parser_dd_handle_t parser_dd)
             }
         }
 
-        if(fscod < 0x3) /* if not half sample rate */ 
+        if(fscod < 0x3) /* if not half sample rate */
         {
             src_skip_bits(bs, 1); /* sourcefscod */
         }
     }
 
-    if( (strmtyp == 0x0) && (parser_dd->numblks != numblks_tbl[0x3]) ) 
+    if( (strmtyp == 0x0) && (parser_dd->numblks != numblks_tbl[0x3]) )
     {
         src_read_bits(bs, 1); /* convsync */
     }
@@ -608,7 +608,7 @@ parse_ec3_substream(bbio_handle_t bs, parser_dd_handle_t parser_dd)
     if(strmtyp == 0x2) /* if bit stream converted from AC-3 */
     {
         uint8_t blkid = 0;
-        if(parser_dd->numblks == numblks_tbl[0x3]) /* 6 blocks per syncframe */ 
+        if(parser_dd->numblks == numblks_tbl[0x3]) /* 6 blocks per syncframe */
         {
             blkid = 1;
         }
@@ -627,7 +627,7 @@ parse_ec3_substream(bbio_handle_t bs, parser_dd_handle_t parser_dd)
     if (substrm->addbsie)
     {
         substrm->addbsil = (uint8_t)src_read_bits(bs, 6) + 1;
-        
+
         if (substrm->addbsil < sizeof(substrm->addbsi))
         {
             uint8_t i = 0;
@@ -1443,7 +1443,7 @@ parser_ec3_get_cfg(parser_handle_t parser, uint8_t **buf, size_t *buf_len, BOOL 
             {
                 pactive_stream = &(parser_dd->subs[0][0]);
             }
-            else 
+            else
             {
                 pactive_stream = &parser_dd->subs_ind[0];
             }
@@ -1937,6 +1937,7 @@ void
 parser_ec3_reg(void)
 {
     reg_parser_set("ec3", parser_ec3_create);
+    reg_parser_set("eac3", parser_ec3_create);
 }
 
 static void parser_ec3_check_ccff_conformance(parser_dd_handle_t parser_dd)
