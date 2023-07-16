@@ -1,3 +1,9 @@
+## v1.2.0 Library New Features:
+
+  * Fix codec id for EL layer (dvhe instead of hev1)
+  * Support .eac3 audio input
+  * Add simple logging
+
 ## v1.1.0 Library New Features:
 
   * Support sample entry box name set from command line for Dolby Vision profile 4, 5 and 8
