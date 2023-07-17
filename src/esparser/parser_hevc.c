@@ -1706,44 +1706,56 @@ parser_hevc_need_fix_ctts(parser_handle_t parser)
     return TRUE;
 }
 
-static int32_t
-parser_hevc_get_cts_offset(parser_handle_t parser, uint32_t sample_idx)
+static uint64_t*
+calc_offset_and_get_cache(parser_handle_t parser, int32_t *ctts_offset) {
+    parser_hevc_handle_t parser_hevc = (parser_hevc_handle_t) parser;
+    idx_value_t *cv;
+    it_list_handle_t it = it_create();
+    uint32_t max_size = 0;
+
+    it_init(it, parser_hevc->hevc_cts_offset_lst);
+    while (cv = (idx_value_t *) it_get_entry(it))
+    {
+        if (cv->idx > max_size)
+            max_size = cv->idx;
+
+        if((int32_t)cv->value < *ctts_offset)
+            *ctts_offset = (int32_t)cv->value;
+    }
+
+    *ctts_offset = -*ctts_offset;
+    uint64_t *values = calloc((max_size+1), sizeof(*values));
+
+    it_init(it, parser_hevc->hevc_cts_offset_lst);
+    while ((cv = (idx_value_t *)it_get_entry(it)))
+    {
+        values[cv->idx] = cv->value;
+    }
+    it_destroy(it);
+
+    return values;
+}
+
+static void
+parser_hevc_update_ctts(update_ctts_conf_t conf, parser_handle_t parser)
 {
-    idx_value_t *  cv;
-    uint64_t ctts = 0;
-    static int32_t ctts_offset = 0;
+    int32_t ctts_offset = 0;
+    uint64_t *values = calc_offset_and_get_cache(parser, &ctts_offset);
+    uint32_t u, ctts_base = 0, ctts = ctts_offset;
 
-    it_list_handle_t   it  = it_create();
-    parser_hevc_handle_t parser_hevc = (parser_hevc_handle_t)parser;
-
-    if(sample_idx == 0)
+    for (u = 0; u < conf.sample_num; u++)
     {
+        if(u != 0)
+            ctts = (int32_t) (values[u] + ctts_offset);
 
-        it_init(it,parser_hevc->hevc_cts_offset_lst);
-        while ((cv = (idx_value_t *)it_get_entry(it)))
-        {
-            if((int32_t)cv->value < ctts_offset)
-                ctts_offset = (int32_t)cv->value;
+        if (conf.warp_media_timestamps)
+            ctts = (uint32_t)rescale_u64(ctts, conf.warp_media_timescale, conf.warp_parser_timescale);
 
-        }
-        it_destroy(it);
-        return (-ctts_offset);
+        if (u == 0 && conf.ctts_v1)
+            ctts_base = ctts;
+
+        count_value_lst_update(conf.cts_offset_lst, ctts - ctts_base);
     }
-    else
-    {
-        it_init(it, parser_hevc->hevc_cts_offset_lst);
-        while ((cv = (idx_value_t *)it_get_entry(it)))
-        {
-            if (cv->idx == sample_idx)
-            {
-                ctts = cv->value;
-                break;
-            }
-        }
-        it_destroy(it);
-    }
-
-    return (int32_t)(ctts + (-ctts_offset));
 }
 
 /** get dsi for hevc (HEVCDecoderConfigurationRecord) */
@@ -2281,7 +2293,7 @@ parser_hevc_create(uint32_t dsi_type)
 
     /**** avc only,hevc don't need them */
     parser->need_fix_cts    = parser_hevc_need_fix_ctts;
-    parser->get_cts_offset = parser_hevc_get_cts_offset;
+    parser->update_ctts     = parser_hevc_update_ctts;
 
     if (dsi_type == DSI_TYPE_MP4FF)
     {

@@ -5322,28 +5322,19 @@ mp4_muxer_input_sample (track_handle_t      htrack
 static void
 update_ctts(track_handle_t track, parser_handle_t parser)
 {
-    uint32_t cts_base = 0;
-    uint32_t u, cts_offset;
-
     list_destroy(track->cts_offset_lst);
     track->cts_offset_lst = list_create(sizeof(count_value_t)); /** all track lists are pre-created */
 
-    for (u = 0; u < track->sample_num; u++)
-    {
-        cts_offset = parser->get_cts_offset(parser, u);
+    update_ctts_conf_t conf = {
+        track->cts_offset_lst,
+        track->sample_num,
+        track->warp_media_timestamps,
+        track->warp_media_timescale,
+        track->warp_parser_timescale,
+        ((track->mp4_ctrl->usr_cfg_mux_ref->mux_cfg_flags & ISOM_MUXCFG_WRITE_CTTS_V1) != 0)
+    };
 
-        if (track->warp_media_timestamps)
-        {
-            cts_offset = (uint32_t)rescale_u64(cts_offset, track->warp_media_timescale, track->warp_parser_timescale);
-        }
-
-        if (u == 0 && ((track->mp4_ctrl->usr_cfg_mux_ref->mux_cfg_flags & ISOM_MUXCFG_WRITE_CTTS_V1) != 0))
-        {
-            cts_base = cts_offset;
-        }
-
-        count_value_lst_update(track->cts_offset_lst, cts_offset - cts_base);
-    }
+    parser->update_ctts(conf, parser);
 }
 
 static int32_t
@@ -5716,7 +5707,7 @@ setup_muxer(mp4_ctrl_handle_t muxer)
         }
 
         /** fix CTS if supported (avc only and with reordering) */
-        if (parser->get_cts_offset && parser->need_fix_cts(parser))
+        if (parser->update_ctts && parser->need_fix_cts(parser))
         {
             update_ctts(track, parser);
             msglog(NULL, MSGLOG_INFO, "  final table size: cts %d\n", list_get_entry_num(track->cts_offset_lst));

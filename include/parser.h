@@ -406,6 +406,15 @@ typedef struct parser_reporter_t_
     void *data;
 } parser_reporter_t;
 
+typedef struct update_ctts_conf_t_
+{
+    list_handle_t   cts_offset_lst;
+    uint32_t        sample_num;
+    BOOL            warp_media_timestamps;
+    uint32_t        warp_media_timescale;
+    uint32_t        warp_parser_timescale;
+    BOOL            ctts_v1;
+} update_ctts_conf_t;
 
 /** external timing info: default value and if to overide avc or vc1 embededed timing */
 typedef struct ext_timing_info_t_
@@ -507,8 +516,8 @@ typedef struct codec_config_t_
     void (*show_info)(parser_handle_t parser);                                                                              \
     /**** avc only */                                                                                                       \
     int32_t     (*copy_sample)   (parser_handle_t parser, bbio_handle_t snk, int64_t pos);                                  \
-    BOOL    (*need_fix_cts)  (parser_handle_t parser);                                                                      \
-    int32_t (*get_cts_offset)(parser_handle_t parser, uint32_t sample_idx);                                                 \
+    BOOL    (*need_fix_cts) (parser_handle_t parser);                                                                       \
+    void    (*update_ctts)  (update_ctts_conf_t conf, parser_handle_t parser);                                              \
                                                                                                                             \
     uint8_t *(*write_cfg)(parser_handle_t parser, bbio_handle_t sink);                                                      \
                                                                                                                             \

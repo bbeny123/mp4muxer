@@ -2841,6 +2841,29 @@ parser_avc_get_cts_offset(parser_handle_t parser, uint32_t sample_idx)
     }
 }
 
+static void
+parser_avc_update_ctts(update_ctts_conf_t conf, parser_handle_t parser)
+{
+    uint32_t u, cts_base = 0, cts_offset;
+
+    for (u = 0; u < conf.sample_num; u++)
+    {
+        cts_offset = parser_avc_get_cts_offset(parser, u);
+
+        if (conf.warp_media_timestamps)
+        {
+            cts_offset = (uint32_t)rescale_u64(cts_offset, conf.warp_media_timescale, conf.warp_parser_timescale);
+        }
+
+        if (u == 0 && conf.ctts_v1)
+        {
+            cts_base = cts_offset;
+        }
+
+        count_value_lst_update(conf.cts_offset_lst, cts_offset - cts_base);
+    }
+}
+
 /* get dsi for avc (AVCDecoderConfigurationRecord) */
 /* implements method get_cfg() of the (AVC) parser for the dsi_type DSI_TYPE_MP4FF
  */
@@ -3749,7 +3772,7 @@ parser_avc_create(uint32_t dsi_type)
 
     /**** avc only */
     parser->need_fix_cts    = parser_avc_need_fix_cts;
-    parser->get_cts_offset = parser_avc_get_cts_offset;
+    parser->update_ctts     = parser_avc_update_ctts;
     if (dsi_type == DSI_TYPE_MP4FF)
     {
         parser->write_cfg = parser_avc_write_mp4_cfg;
