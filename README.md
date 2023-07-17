@@ -33,7 +33,7 @@ For Windows platform development, msbuild must be installed: https://learn.micro
     - for windows_amd64: "msbuild make\mp4muxer\windows_amd64\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
     - for windows_x86: "msbuild make\mp4muxer\windows_x86\mp4muxer_2022.vcxproj /p:Configuration=Release /p:Platform=x64 /t:Rebuild"
 
-#### Using the makefiles (on Linux and MacOS) - Untested
+#### Using the makefiles (on Linux and MacOS)
 
     After cloning the dlb_mp4base repository to your local machine, go to the appropriate directory, depending on your machine OS and architecture, such as:
     "cd dlb_mp4base/make/mp4muxer<architecture>"

@@ -1,3 +1,8 @@
+## v1.3.0 Library New Features:
+
+  * Significantly improve hevc muxing performance
+  * Extended logging
+
 ## v1.2.0 Library New Features:
 
   * Fix codec id for EL layer (dvhe instead of hev1)
