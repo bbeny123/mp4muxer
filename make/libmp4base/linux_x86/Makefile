@@ -17,7 +17,7 @@
 # * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
 # * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
 # * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+# * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # * OF THE POSSIBILITY OF SUCH DAMAGE.
 # ************************************************************************************************************/
@@ -60,11 +60,11 @@ help:
 	$(AT)$(ECHO) "	clean"
 
 
-BASE=../../../../
+BASE=../../../
 
 # Compile files for libmp4base_release
 CC_libmp4base_release=$(CC)
-CFLAGS_OUTPUT_FILE_libmp4base_release=-o 
+CFLAGS_OUTPUT_FILE_libmp4base_release=-o
 CFLAGS_libmp4base_release=\
   $(EXTRA_CFLAGS) \
   -O3 \
@@ -77,10 +77,7 @@ CFLAGS_libmp4base_release=\
   -DEMA_BUILD=1 \
   -DNDEBUG=1 \
   -D_FILE_OFFSET_BITS=64 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include
+  -I$(BASE)include
 
 CCDEP_libmp4base_release=$(CC)
 CCDEPFLAGS_libmp4base_release=\
@@ -88,13 +85,10 @@ CCDEPFLAGS_libmp4base_release=\
   -DEMA_BUILD=1 \
   -DNDEBUG=1 \
   -D_FILE_OFFSET_BITS=64 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
+  -I$(BASE)include \
   -MT
 
-CCDEPFLAGS_OUTPUT_FILE_libmp4base_release=-o 
+CCDEPFLAGS_OUTPUT_FILE_libmp4base_release=-o
 OBJS_libmp4base_release=\
   obj/libmp4base_release/dsi.o \
   obj/libmp4base_release/parser_aac.o \
@@ -147,8 +141,8 @@ obj/libmp4base_release:
 
 include $(wildcard obj/libmp4base_release/dsi.d)
 
-    
-obj/libmp4base_release/dsi.o: $(BASE)dlb_mp4base/src/esparser/dsi.c | obj/libmp4base_release
+
+obj/libmp4base_release/dsi.o: $(BASE)src/esparser/dsi.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/dsi.d $<
@@ -161,8 +155,8 @@ obj/libmp4base_release/dsi.o: $(BASE)dlb_mp4base/src/esparser/dsi.c | obj/libmp4
 
 include $(wildcard obj/libmp4base_release/parser_aac.d)
 
-    
-obj/libmp4base_release/parser_aac.o: $(BASE)dlb_mp4base/src/esparser/parser_aac.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_aac.o: $(BASE)src/esparser/parser_aac.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_aac.d $<
@@ -175,8 +169,8 @@ obj/libmp4base_release/parser_aac.o: $(BASE)dlb_mp4base/src/esparser/parser_aac.
 
 include $(wildcard obj/libmp4base_release/parser_avc.d)
 
-    
-obj/libmp4base_release/parser_avc.o: $(BASE)dlb_mp4base/src/esparser/parser_avc.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_avc.o: $(BASE)src/esparser/parser_avc.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_avc.d $<
@@ -189,8 +183,8 @@ obj/libmp4base_release/parser_avc.o: $(BASE)dlb_mp4base/src/esparser/parser_avc.
 
 include $(wildcard obj/libmp4base_release/parser_avc_dec.d)
 
-    
-obj/libmp4base_release/parser_avc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_avc_dec.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_avc_dec.o: $(BASE)src/esparser/parser_avc_dec.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_avc_dec.d $<
@@ -203,8 +197,8 @@ obj/libmp4base_release/parser_avc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_
 
 include $(wildcard obj/libmp4base_release/parser_avc_dpb.d)
 
-    
-obj/libmp4base_release/parser_avc_dpb.o: $(BASE)dlb_mp4base/src/esparser/parser_avc_dpb.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_avc_dpb.o: $(BASE)src/esparser/parser_avc_dpb.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_avc_dpb.d $<
@@ -217,8 +211,8 @@ obj/libmp4base_release/parser_avc_dpb.o: $(BASE)dlb_mp4base/src/esparser/parser_
 
 include $(wildcard obj/libmp4base_release/parser_hevc.d)
 
-    
-obj/libmp4base_release/parser_hevc.o: $(BASE)dlb_mp4base/src/esparser/parser_hevc.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_hevc.o: $(BASE)src/esparser/parser_hevc.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_hevc.d $<
@@ -231,8 +225,8 @@ obj/libmp4base_release/parser_hevc.o: $(BASE)dlb_mp4base/src/esparser/parser_hev
 
 include $(wildcard obj/libmp4base_release/parser_hevc_dec.d)
 
-    
-obj/libmp4base_release/parser_hevc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_hevc_dec.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_hevc_dec.o: $(BASE)src/esparser/parser_hevc_dec.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_hevc_dec.d $<
@@ -245,8 +239,8 @@ obj/libmp4base_release/parser_hevc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser
 
 include $(wildcard obj/libmp4base_release/parser.d)
 
-    
-obj/libmp4base_release/parser.o: $(BASE)dlb_mp4base/src/esparser/parser.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser.o: $(BASE)src/esparser/parser.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser.d $<
@@ -259,8 +253,8 @@ obj/libmp4base_release/parser.o: $(BASE)dlb_mp4base/src/esparser/parser.c | obj/
 
 include $(wildcard obj/libmp4base_release/parser_dd.d)
 
-    
-obj/libmp4base_release/parser_dd.o: $(BASE)dlb_mp4base/src/esparser/parser_dd.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_dd.o: $(BASE)src/esparser/parser_dd.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_dd.d $<
@@ -274,8 +268,8 @@ obj/libmp4base_release/parser_dd.o: $(BASE)dlb_mp4base/src/esparser/parser_dd.c 
 
 include $(wildcard obj/libmp4base_release/parser_ac4.d)
 
-    
-obj/libmp4base_release/parser_ac4.o: $(BASE)dlb_mp4base/src/esparser/parser_ac4.c | obj/libmp4base_release
+
+obj/libmp4base_release/parser_ac4.o: $(BASE)src/esparser/parser_ac4.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/parser_ac4.d $<
@@ -289,8 +283,8 @@ obj/libmp4base_release/parser_ac4.o: $(BASE)dlb_mp4base/src/esparser/parser_ac4.
 
 include $(wildcard obj/libmp4base_release/mp4_isom.d)
 
-    
-obj/libmp4base_release/mp4_isom.o: $(BASE)dlb_mp4base/src/mp4_isom.c | obj/libmp4base_release
+
+obj/libmp4base_release/mp4_isom.o: $(BASE)src/mp4_isom.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/mp4_isom.d $<
@@ -303,8 +297,8 @@ obj/libmp4base_release/mp4_isom.o: $(BASE)dlb_mp4base/src/mp4_isom.c | obj/libmp
 
 include $(wildcard obj/libmp4base_release/mp4_muxer.d)
 
-    
-obj/libmp4base_release/mp4_muxer.o: $(BASE)dlb_mp4base/src/mp4_muxer.c | obj/libmp4base_release
+
+obj/libmp4base_release/mp4_muxer.o: $(BASE)src/mp4_muxer.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/mp4_muxer.d $<
@@ -317,8 +311,8 @@ obj/libmp4base_release/mp4_muxer.o: $(BASE)dlb_mp4base/src/mp4_muxer.c | obj/lib
 
 include $(wildcard obj/libmp4base_release/mp4_stream.d)
 
-    
-obj/libmp4base_release/mp4_stream.o: $(BASE)dlb_mp4base/src/mp4_stream.c | obj/libmp4base_release
+
+obj/libmp4base_release/mp4_stream.o: $(BASE)src/mp4_stream.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/mp4_stream.d $<
@@ -331,8 +325,8 @@ obj/libmp4base_release/mp4_stream.o: $(BASE)dlb_mp4base/src/mp4_stream.c | obj/l
 
 include $(wildcard obj/libmp4base_release/io_base.d)
 
-    
-obj/libmp4base_release/io_base.o: $(BASE)dlb_mp4base/src/util/io_base.c | obj/libmp4base_release
+
+obj/libmp4base_release/io_base.o: $(BASE)src/util/io_base.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/io_base.d $<
@@ -345,8 +339,8 @@ obj/libmp4base_release/io_base.o: $(BASE)dlb_mp4base/src/util/io_base.c | obj/li
 
 include $(wildcard obj/libmp4base_release/io_buffer.d)
 
-    
-obj/libmp4base_release/io_buffer.o: $(BASE)dlb_mp4base/src/util/io_buffer.c | obj/libmp4base_release
+
+obj/libmp4base_release/io_buffer.o: $(BASE)src/util/io_buffer.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/io_buffer.d $<
@@ -359,8 +353,8 @@ obj/libmp4base_release/io_buffer.o: $(BASE)dlb_mp4base/src/util/io_buffer.c | ob
 
 include $(wildcard obj/libmp4base_release/io_file.d)
 
-    
-obj/libmp4base_release/io_file.o: $(BASE)dlb_mp4base/src/util/io_file.c | obj/libmp4base_release
+
+obj/libmp4base_release/io_file.o: $(BASE)src/util/io_file.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/io_file.d $<
@@ -373,8 +367,8 @@ obj/libmp4base_release/io_file.o: $(BASE)dlb_mp4base/src/util/io_file.c | obj/li
 
 include $(wildcard obj/libmp4base_release/list_itr.d)
 
-    
-obj/libmp4base_release/list_itr.o: $(BASE)dlb_mp4base/src/util/list_itr.c | obj/libmp4base_release
+
+obj/libmp4base_release/list_itr.o: $(BASE)src/util/list_itr.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/list_itr.d $<
@@ -387,8 +381,8 @@ obj/libmp4base_release/list_itr.o: $(BASE)dlb_mp4base/src/util/list_itr.c | obj/
 
 include $(wildcard obj/libmp4base_release/msg_log.d)
 
-    
-obj/libmp4base_release/msg_log.o: $(BASE)dlb_mp4base/src/util/msg_log.c | obj/libmp4base_release
+
+obj/libmp4base_release/msg_log.o: $(BASE)src/util/msg_log.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/msg_log.d $<
@@ -401,8 +395,8 @@ obj/libmp4base_release/msg_log.o: $(BASE)dlb_mp4base/src/util/msg_log.c | obj/li
 
 include $(wildcard obj/libmp4base_release/registry.d)
 
-    
-obj/libmp4base_release/registry.o: $(BASE)dlb_mp4base/src/util/registry.c | obj/libmp4base_release
+
+obj/libmp4base_release/registry.o: $(BASE)src/util/registry.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/registry.d $<
@@ -415,8 +409,8 @@ obj/libmp4base_release/registry.o: $(BASE)dlb_mp4base/src/util/registry.c | obj/
 
 include $(wildcard obj/libmp4base_release/utils.d)
 
-    
-obj/libmp4base_release/utils.o: $(BASE)dlb_mp4base/src/util/utils.c | obj/libmp4base_release
+
+obj/libmp4base_release/utils.o: $(BASE)src/util/utils.c | obj/libmp4base_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_release) $(CCDEPFLAGS_libmp4base_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_release)obj/libmp4base_release/utils.d $<
@@ -432,7 +426,7 @@ obj/libmp4base_release/utils.o: $(BASE)dlb_mp4base/src/util/utils.c | obj/libmp4
 
 # Compile files for libmp4base_debug
 CC_libmp4base_debug=$(CC)
-CFLAGS_OUTPUT_FILE_libmp4base_debug=-o 
+CFLAGS_OUTPUT_FILE_libmp4base_debug=-o
 CFLAGS_libmp4base_debug=\
   $(EXTRA_CFLAGS) \
   -g \
@@ -447,10 +441,7 @@ CFLAGS_libmp4base_debug=\
   -DDEBUG=1 \
   -DEMA_BUILD=1 \
   -D_FILE_OFFSET_BITS=64 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include
+  -I$(BASE)include
 
 CCDEP_libmp4base_debug=$(CC)
 CCDEPFLAGS_libmp4base_debug=\
@@ -458,13 +449,10 @@ CCDEPFLAGS_libmp4base_debug=\
   -DDEBUG=1 \
   -DEMA_BUILD=1 \
   -D_FILE_OFFSET_BITS=64 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
+  -I$(BASE)include \
   -MT
 
-CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug=-o 
+CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug=-o
 OBJS_libmp4base_debug=\
   obj/libmp4base_debug/dsi.o \
   obj/libmp4base_debug/parser_aac.o \
@@ -517,8 +505,8 @@ obj/libmp4base_debug:
 
 include $(wildcard obj/libmp4base_debug/dsi.d)
 
-    
-obj/libmp4base_debug/dsi.o: $(BASE)dlb_mp4base/src/esparser/dsi.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/dsi.o: $(BASE)src/esparser/dsi.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/dsi.d $<
@@ -531,8 +519,8 @@ obj/libmp4base_debug/dsi.o: $(BASE)dlb_mp4base/src/esparser/dsi.c | obj/libmp4ba
 
 include $(wildcard obj/libmp4base_debug/parser_aac.d)
 
-    
-obj/libmp4base_debug/parser_aac.o: $(BASE)dlb_mp4base/src/esparser/parser_aac.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_aac.o: $(BASE)src/esparser/parser_aac.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_aac.d $<
@@ -545,8 +533,8 @@ obj/libmp4base_debug/parser_aac.o: $(BASE)dlb_mp4base/src/esparser/parser_aac.c 
 
 include $(wildcard obj/libmp4base_debug/parser_avc.d)
 
-    
-obj/libmp4base_debug/parser_avc.o: $(BASE)dlb_mp4base/src/esparser/parser_avc.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_avc.o: $(BASE)src/esparser/parser_avc.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_avc.d $<
@@ -559,8 +547,8 @@ obj/libmp4base_debug/parser_avc.o: $(BASE)dlb_mp4base/src/esparser/parser_avc.c 
 
 include $(wildcard obj/libmp4base_debug/parser_avc_dec.d)
 
-    
-obj/libmp4base_debug/parser_avc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_avc_dec.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_avc_dec.o: $(BASE)src/esparser/parser_avc_dec.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_avc_dec.d $<
@@ -573,8 +561,8 @@ obj/libmp4base_debug/parser_avc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_av
 
 include $(wildcard obj/libmp4base_debug/parser_avc_dpb.d)
 
-    
-obj/libmp4base_debug/parser_avc_dpb.o: $(BASE)dlb_mp4base/src/esparser/parser_avc_dpb.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_avc_dpb.o: $(BASE)src/esparser/parser_avc_dpb.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_avc_dpb.d $<
@@ -587,8 +575,8 @@ obj/libmp4base_debug/parser_avc_dpb.o: $(BASE)dlb_mp4base/src/esparser/parser_av
 
 include $(wildcard obj/libmp4base_debug/parser_hevc.d)
 
-    
-obj/libmp4base_debug/parser_hevc.o: $(BASE)dlb_mp4base/src/esparser/parser_hevc.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_hevc.o: $(BASE)src/esparser/parser_hevc.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_hevc.d $<
@@ -601,8 +589,8 @@ obj/libmp4base_debug/parser_hevc.o: $(BASE)dlb_mp4base/src/esparser/parser_hevc.
 
 include $(wildcard obj/libmp4base_debug/parser_hevc_dec.d)
 
-    
-obj/libmp4base_debug/parser_hevc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_hevc_dec.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_hevc_dec.o: $(BASE)src/esparser/parser_hevc_dec.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_hevc_dec.d $<
@@ -615,8 +603,8 @@ obj/libmp4base_debug/parser_hevc_dec.o: $(BASE)dlb_mp4base/src/esparser/parser_h
 
 include $(wildcard obj/libmp4base_debug/parser.d)
 
-    
-obj/libmp4base_debug/parser.o: $(BASE)dlb_mp4base/src/esparser/parser.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser.o: $(BASE)src/esparser/parser.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser.d $<
@@ -629,8 +617,8 @@ obj/libmp4base_debug/parser.o: $(BASE)dlb_mp4base/src/esparser/parser.c | obj/li
 
 include $(wildcard obj/libmp4base_debug/parser_dd.d)
 
-    
-obj/libmp4base_debug/parser_dd.o: $(BASE)dlb_mp4base/src/esparser/parser_dd.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_dd.o: $(BASE)src/esparser/parser_dd.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_dd.d $<
@@ -644,8 +632,8 @@ obj/libmp4base_debug/parser_dd.o: $(BASE)dlb_mp4base/src/esparser/parser_dd.c | 
 
 include $(wildcard obj/libmp4base_debug/parser_ac4.d)
 
-    
-obj/libmp4base_debug/parser_ac4.o: $(BASE)dlb_mp4base/src/esparser/parser_ac4.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/parser_ac4.o: $(BASE)src/esparser/parser_ac4.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/parser_ac4.d $<
@@ -659,8 +647,8 @@ obj/libmp4base_debug/parser_ac4.o: $(BASE)dlb_mp4base/src/esparser/parser_ac4.c 
 
 include $(wildcard obj/libmp4base_debug/mp4_isom.d)
 
-    
-obj/libmp4base_debug/mp4_isom.o: $(BASE)dlb_mp4base/src/mp4_isom.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/mp4_isom.o: $(BASE)src/mp4_isom.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/mp4_isom.d $<
@@ -673,8 +661,8 @@ obj/libmp4base_debug/mp4_isom.o: $(BASE)dlb_mp4base/src/mp4_isom.c | obj/libmp4b
 
 include $(wildcard obj/libmp4base_debug/mp4_muxer.d)
 
-    
-obj/libmp4base_debug/mp4_muxer.o: $(BASE)dlb_mp4base/src/mp4_muxer.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/mp4_muxer.o: $(BASE)src/mp4_muxer.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/mp4_muxer.d $<
@@ -687,8 +675,8 @@ obj/libmp4base_debug/mp4_muxer.o: $(BASE)dlb_mp4base/src/mp4_muxer.c | obj/libmp
 
 include $(wildcard obj/libmp4base_debug/mp4_stream.d)
 
-    
-obj/libmp4base_debug/mp4_stream.o: $(BASE)dlb_mp4base/src/mp4_stream.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/mp4_stream.o: $(BASE)src/mp4_stream.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/mp4_stream.d $<
@@ -702,8 +690,8 @@ obj/libmp4base_debug/mp4_stream.o: $(BASE)dlb_mp4base/src/mp4_stream.c | obj/lib
 
 include $(wildcard obj/libmp4base_debug/io_base.d)
 
-    
-obj/libmp4base_debug/io_base.o: $(BASE)dlb_mp4base/src/util/io_base.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/io_base.o: $(BASE)src/util/io_base.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/io_base.d $<
@@ -716,8 +704,8 @@ obj/libmp4base_debug/io_base.o: $(BASE)dlb_mp4base/src/util/io_base.c | obj/libm
 
 include $(wildcard obj/libmp4base_debug/io_buffer.d)
 
-    
-obj/libmp4base_debug/io_buffer.o: $(BASE)dlb_mp4base/src/util/io_buffer.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/io_buffer.o: $(BASE)src/util/io_buffer.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/io_buffer.d $<
@@ -730,8 +718,8 @@ obj/libmp4base_debug/io_buffer.o: $(BASE)dlb_mp4base/src/util/io_buffer.c | obj/
 
 include $(wildcard obj/libmp4base_debug/io_file.d)
 
-    
-obj/libmp4base_debug/io_file.o: $(BASE)dlb_mp4base/src/util/io_file.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/io_file.o: $(BASE)src/util/io_file.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/io_file.d $<
@@ -744,8 +732,8 @@ obj/libmp4base_debug/io_file.o: $(BASE)dlb_mp4base/src/util/io_file.c | obj/libm
 
 include $(wildcard obj/libmp4base_debug/list_itr.d)
 
-    
-obj/libmp4base_debug/list_itr.o: $(BASE)dlb_mp4base/src/util/list_itr.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/list_itr.o: $(BASE)src/util/list_itr.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/list_itr.d $<
@@ -758,8 +746,8 @@ obj/libmp4base_debug/list_itr.o: $(BASE)dlb_mp4base/src/util/list_itr.c | obj/li
 
 include $(wildcard obj/libmp4base_debug/msg_log.d)
 
-    
-obj/libmp4base_debug/msg_log.o: $(BASE)dlb_mp4base/src/util/msg_log.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/msg_log.o: $(BASE)src/util/msg_log.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/msg_log.d $<
@@ -772,8 +760,8 @@ obj/libmp4base_debug/msg_log.o: $(BASE)dlb_mp4base/src/util/msg_log.c | obj/libm
 
 include $(wildcard obj/libmp4base_debug/registry.d)
 
-    
-obj/libmp4base_debug/registry.o: $(BASE)dlb_mp4base/src/util/registry.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/registry.o: $(BASE)src/util/registry.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/registry.d $<
@@ -786,8 +774,8 @@ obj/libmp4base_debug/registry.o: $(BASE)dlb_mp4base/src/util/registry.c | obj/li
 
 include $(wildcard obj/libmp4base_debug/utils.d)
 
-    
-obj/libmp4base_debug/utils.o: $(BASE)dlb_mp4base/src/util/utils.c | obj/libmp4base_debug
+
+obj/libmp4base_debug/utils.o: $(BASE)src/util/utils.c | obj/libmp4base_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_libmp4base_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_libmp4base_debug) $(CCDEPFLAGS_libmp4base_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_libmp4base_debug)obj/libmp4base_debug/utils.d $<
@@ -803,7 +791,7 @@ obj/libmp4base_debug/utils.o: $(BASE)dlb_mp4base/src/util/utils.c | obj/libmp4ba
 
 AR_libmp4base_release=ar
 ARFLAGS_libmp4base_release=-rc
-ARFLAGS_OUTPUT_FILE_libmp4base_release= 
+ARFLAGS_OUTPUT_FILE_libmp4base_release=
 
 libmp4base_release.a: $(OBJS_libmp4base_release)
 	$(AT)$(ECHO) "[AR:$(AR_libmp4base_release)] $@"
@@ -813,7 +801,7 @@ libmp4base_release.a: $(OBJS_libmp4base_release)
 
 AR_libmp4base_debug=ar
 ARFLAGS_libmp4base_debug=-rc
-ARFLAGS_OUTPUT_FILE_libmp4base_debug= 
+ARFLAGS_OUTPUT_FILE_libmp4base_debug=
 
 libmp4base_debug.a: $(OBJS_libmp4base_debug)
 	$(AT)$(ECHO) "[AR:$(AR_libmp4base_debug)] $@"

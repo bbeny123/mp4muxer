@@ -17,7 +17,7 @@
 # * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
 # * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
 # * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+# * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # * OF THE POSSIBILITY OF SUCH DAMAGE.
 # ************************************************************************************************************/
@@ -60,11 +60,11 @@ help:
 	$(AT)$(ECHO) "	clean"
 
 
-BASE=../../../../
+BASE=../../../
 
 # Compile files for mp4muxer_release
 CC_mp4muxer_release=$(CC)
-CFLAGS_OUTPUT_FILE_mp4muxer_release=-o 
+CFLAGS_OUTPUT_FILE_mp4muxer_release=-o
 CFLAGS_mp4muxer_release=\
   $(EXTRA_CFLAGS) \
   -O3 \
@@ -76,25 +76,19 @@ CFLAGS_mp4muxer_release=\
   -c \
   -DENABLE_MP4_MSGLOG=1 \
   -DNDEBUG=1 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/frontend
+  -I$(BASE)include \
+  -I$(BASE)frontend
 
 CCDEP_mp4muxer_release=$(CC)
 CCDEPFLAGS_mp4muxer_release=\
   -MM \
   -DENABLE_MP4_MSGLOG=1 \
   -DNDEBUG=1 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/frontend \
+  -I$(BASE)include \
+  -I$(BASE)frontend \
   -MT
 
-CCDEPFLAGS_OUTPUT_FILE_mp4muxer_release=-o 
+CCDEPFLAGS_OUTPUT_FILE_mp4muxer_release=-o
 OBJS_mp4muxer_release=\
   obj/mp4muxer_release/mp4_muxer_app.o \
   obj/mp4muxer_release/ema_mp4_mux_api.o
@@ -111,8 +105,8 @@ obj/mp4muxer_release:
 
 include $(wildcard obj/mp4muxer_release/mp4_muxer_app.d)
 
-    
-obj/mp4muxer_release/mp4_muxer_app.o: $(BASE)dlb_mp4base/frontend/mp4_muxer_app.c | obj/mp4muxer_release
+
+obj/mp4muxer_release/mp4_muxer_app.o: $(BASE)frontend/mp4_muxer_app.c | obj/mp4muxer_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_mp4muxer_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_mp4muxer_release) $(CCDEPFLAGS_mp4muxer_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_mp4muxer_release)obj/mp4muxer_release/mp4_muxer_app.d $<
@@ -125,8 +119,8 @@ obj/mp4muxer_release/mp4_muxer_app.o: $(BASE)dlb_mp4base/frontend/mp4_muxer_app.
 
 include $(wildcard obj/mp4muxer_release/ema_mp4_mux_api.d)
 
-    
-obj/mp4muxer_release/ema_mp4_mux_api.o: $(BASE)dlb_mp4base/frontend/ema_mp4_mux_api.c | obj/mp4muxer_release
+
+obj/mp4muxer_release/ema_mp4_mux_api.o: $(BASE)frontend/ema_mp4_mux_api.c | obj/mp4muxer_release
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_mp4muxer_release)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_mp4muxer_release) $(CCDEPFLAGS_mp4muxer_release) $@ $(CCDEPFLAGS_OUTPUT_FILE_mp4muxer_release)obj/mp4muxer_release/ema_mp4_mux_api.d $<
@@ -142,7 +136,7 @@ obj/mp4muxer_release/ema_mp4_mux_api.o: $(BASE)dlb_mp4base/frontend/ema_mp4_mux_
 
 # Compile files for mp4muxer_debug
 CC_mp4muxer_debug=$(CC)
-CFLAGS_OUTPUT_FILE_mp4muxer_debug=-o 
+CFLAGS_OUTPUT_FILE_mp4muxer_debug=-o
 CFLAGS_mp4muxer_debug=\
   $(EXTRA_CFLAGS) \
   -g \
@@ -156,25 +150,19 @@ CFLAGS_mp4muxer_debug=\
   -c \
   -DDEBUG=1 \
   -DENABLE_MP4_MSGLOG=1 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/frontend
+  -I$(BASE)include \
+  -I$(BASE)frontend
 
 CCDEP_mp4muxer_debug=$(CC)
 CCDEPFLAGS_mp4muxer_debug=\
   -MM \
   -DDEBUG=1 \
   -DENABLE_MP4_MSGLOG=1 \
-  -I$(BASE). \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/include \
-  -I$(BASE)dlb_mp4base/frontend \
+  -I$(BASE)include \
+  -I$(BASE)frontend \
   -MT
 
-CCDEPFLAGS_OUTPUT_FILE_mp4muxer_debug=-o 
+CCDEPFLAGS_OUTPUT_FILE_mp4muxer_debug=-o
 OBJS_mp4muxer_debug=\
   obj/mp4muxer_debug/mp4_muxer_app.o \
   obj/mp4muxer_debug/ema_mp4_mux_api.o
@@ -191,8 +179,8 @@ obj/mp4muxer_debug:
 
 include $(wildcard obj/mp4muxer_debug/mp4_muxer_app.d)
 
-    
-obj/mp4muxer_debug/mp4_muxer_app.o: $(BASE)dlb_mp4base/frontend/mp4_muxer_app.c | obj/mp4muxer_debug
+
+obj/mp4muxer_debug/mp4_muxer_app.o: $(BASE)frontend/mp4_muxer_app.c | obj/mp4muxer_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_mp4muxer_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_mp4muxer_debug) $(CCDEPFLAGS_mp4muxer_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_mp4muxer_debug)obj/mp4muxer_debug/mp4_muxer_app.d $<
@@ -205,8 +193,8 @@ obj/mp4muxer_debug/mp4_muxer_app.o: $(BASE)dlb_mp4base/frontend/mp4_muxer_app.c 
 
 include $(wildcard obj/mp4muxer_debug/ema_mp4_mux_api.d)
 
-    
-obj/mp4muxer_debug/ema_mp4_mux_api.o: $(BASE)dlb_mp4base/frontend/ema_mp4_mux_api.c | obj/mp4muxer_debug
+
+obj/mp4muxer_debug/ema_mp4_mux_api.o: $(BASE)frontend/ema_mp4_mux_api.c | obj/mp4muxer_debug
 	$(AT)$(ECHO) "[CCDEP:$(CCDEP_mp4muxer_debug)] $<"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(CCDEP_mp4muxer_debug) $(CCDEPFLAGS_mp4muxer_debug) $@ $(CCDEPFLAGS_OUTPUT_FILE_mp4muxer_debug)obj/mp4muxer_debug/ema_mp4_mux_api.d $<
@@ -223,34 +211,34 @@ obj/mp4muxer_debug/ema_mp4_mux_api.o: $(BASE)dlb_mp4base/frontend/ema_mp4_mux_ap
 LD_mp4muxer_release=gcc
 LDFLAGS_mp4muxer_release=$(EXTRA_LDFLAGS)  -O2
 LDLIBS_mp4muxer_release=-lm
-LDFLAGS_OUTPUT_FILE_mp4muxer_release=-o 
+LDFLAGS_OUTPUT_FILE_mp4muxer_release=-o
 
 # Link mp4muxer_release
-mp4muxer_release: $(OBJS_mp4muxer_release) $(BASE)dlb_mp4base/make/libmp4base/linux_amd64/libmp4base_release.a
+mp4muxer_release: $(OBJS_mp4muxer_release) $(BASE)make/libmp4base/linux_amd64/libmp4base_release.a
 	$(AT)$(ECHO) "[LD:gcc] $^"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(LD_mp4muxer_release) $(LDFLAGS_mp4muxer_release) $(LDFLAGS_OUTPUT_FILE_mp4muxer_release)$@ $^ $(LDLIBS_mp4muxer_release)
 	$(AT)$(PRINTF) "$(COL_END)"
 
-$(BASE)dlb_mp4base/make/libmp4base/linux_amd64/libmp4base_release.a: force
-	$(AT)make $(QUIET) --no-print-directory -C $(BASE)dlb_mp4base/make/libmp4base/linux_amd64 libmp4base_release.a
+$(BASE)make/libmp4base/linux_amd64/libmp4base_release.a: force
+	$(AT)make $(QUIET) --no-print-directory -C $(BASE)make/libmp4base/linux_amd64 libmp4base_release.a
 
 
 
 LD_mp4muxer_debug=gcc
 LDFLAGS_mp4muxer_debug=$(EXTRA_LDFLAGS)  -rdynamic
 LDLIBS_mp4muxer_debug=-lm
-LDFLAGS_OUTPUT_FILE_mp4muxer_debug=-o 
+LDFLAGS_OUTPUT_FILE_mp4muxer_debug=-o
 
 # Link mp4muxer_debug
-mp4muxer_debug: $(OBJS_mp4muxer_debug) $(BASE)dlb_mp4base/make/libmp4base/linux_amd64/libmp4base_debug.a
+mp4muxer_debug: $(OBJS_mp4muxer_debug) $(BASE)make/libmp4base/linux_amd64/libmp4base_debug.a
 	$(AT)$(ECHO) "[LD:gcc] $^"
 	$(AT)$(PRINTF) "$(COL_OUTPUT)"
 	$(AT)$(LD_mp4muxer_debug) $(LDFLAGS_mp4muxer_debug) $(LDFLAGS_OUTPUT_FILE_mp4muxer_debug)$@ $^ $(LDLIBS_mp4muxer_debug)
 	$(AT)$(PRINTF) "$(COL_END)"
 
-$(BASE)dlb_mp4base/make/libmp4base/linux_amd64/libmp4base_debug.a: force
-	$(AT)make $(QUIET) --no-print-directory -C $(BASE)dlb_mp4base/make/libmp4base/linux_amd64 libmp4base_debug.a
+$(BASE)make/libmp4base/linux_amd64/libmp4base_debug.a: force
+	$(AT)make $(QUIET) --no-print-directory -C $(BASE)make/libmp4base/linux_amd64 libmp4base_debug.a
 
 
 
@@ -260,5 +248,5 @@ clean:
 	$(RM) $(OBJS_mp4muxer_debug)
 	$(RM) $(DEPS_mp4muxer_debug)
 	$(RM) mp4muxer_release
-	make -C $(BASE)dlb_mp4base/make/libmp4base/linux_amd64 clean
+	make -C $(BASE)make/libmp4base/linux_amd64 clean
 	$(RM) mp4muxer_debug
