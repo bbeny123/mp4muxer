@@ -1,47 +1,25 @@
 /************************************************************************************************************
-
  * Copyright (c) 2017, Dolby Laboratories Inc.
-
  * All rights reserved.
 
-
-
  * Redistribution and use in source and binary forms, with or without modification, are permitted
-
  * provided that the following conditions are met:
 
-
-
  * 1. Redistributions of source code must retain the above copyright notice, this list of conditions
-
  *    and the following disclaimer.
-
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
-
  *    and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
  * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or
-
  *    promote products derived from this software without specific prior written permission.
 
-
-
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-
  * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-
  * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
-
  * OF THE POSSIBILITY OF SUCH DAMAGE.
-
  ************************************************************************************************************/
 /*<
     @file mp4_muxer.c
@@ -1371,21 +1349,13 @@ write_dsi_box(bbio_handle_t snk, track_handle_t track)
         {
             sink_write_u32(snk,track->parser->dv_dsi_size + 8);
             if (track->parser->ext_timing.ext_dv_profile > 7)
-
             {
-
                 sink_write_4CC(snk, "dvvC");
-
             }
-
             else
-
             {
-
                 sink_write_4CC(snk, "dvcC");
             }
-
-
 
             snk->write(snk, (uint8_t *)track->parser->dv_dsi_buf, track->parser->dv_dsi_size);
             size += track->parser->dv_dsi_size + 8;
@@ -1566,24 +1536,15 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
     {
         if (IS_FOURCC_EQUAL(track->parser->dsi_FourCC, "avcC"))
         {
-
             if(IS_FOURCC_EQUAL(codingname, "avc1"))
-
             {
-
                 codingname = "dva1";
-
             }
-
             else
-
             {
-
                 codingname = "dvav";
             }
-
         }
-
         else if (IS_FOURCC_EQUAL(track->parser->dsi_FourCC, "hvcC"))
         {
             if(IS_FOURCC_EQUAL(codingname, "hev1"))
@@ -1596,9 +1557,7 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
             }
         }
 
-
         memcpy(track->codingname, codingname, 4);
-
     }
     MOV_WRITE_SAMPLE_ENTRY(snk, (uint8_t *)codingname, track->data_ref_index);
 
@@ -7072,13 +7031,9 @@ mp4_muxer_add_track (mp4_ctrl_handle_t  hmuxer
         }
         if (p_usr_cfg_es->sample_entry_name && IS_FOURCC_EQUAL(p_usr_cfg_es->sample_entry_name, "dvh1")) {
             FOURCC_ASSIGN(track->codingname, "dvh1");
-
             FOURCC_ASSIGN(hparser->dsi_name, "dvh1");
-
         }
-
         else
-
         {
             FOURCC_ASSIGN(track->codingname, "dvhe");
             FOURCC_ASSIGN(hparser->dsi_name, "dvhe");
@@ -7530,11 +7485,8 @@ mp4_muxer_encrypt_track (track_handle_t         htrack
         while (cnt--)
         {
             if ((IS_FOURCC_EQUAL(htrack->codingname, "avc1"))
-
 			 || (IS_FOURCC_EQUAL(codingname,"avc3"))
-
 			 || (IS_FOURCC_EQUAL(htrack->codingname, "hvc1"))
-
 			 || (IS_FOURCC_EQUAL(htrack->codingname, "hev1")))
             {
                 int64_t *pos = (int64_t *)list_it_get_entry(htrack->pos_lst);
