@@ -1,0 +1,37 @@
+name: Build - Windows
+
+on: workflow_dispatch
+
+env:
+  # Path to the solution file relative to the root of the project
+  SOLUTION_FILE_PATH: make\mp4muxer\windows_amd64\mp4muxer_2022.vcxproj
+  OUTPUT_DIR_PATH: \output\
+
+  # Configuration type to build
+  BUILD_CONFIGURATION: Release
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.3.1
+      with:
+        msbuild-architecture: x64
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild ${{env.SOLUTION_FILE_PATH}} /p:OutDir=${{env.OUTPUT_DIR_PATH}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:Platform=x64 /t:Rebuild
+      
+    - name: Upload a binary as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: mp4muxer-win
+        path: ${{env.OUTPUT_DIR_PATH}}mp4muxer.exe
+        
