@@ -1,9 +1,13 @@
-## v1.3.0 Library New Features:
+## v1.3.1:
+
+  * macOS binary
+
+## v1.3.0:
 
   * Significantly improve hevc muxing performance
   * Extended logging
 
-## v1.2.0 Library New Features:
+## v1.2.0:
 
   * Fix codec id for EL layer (dvhe instead of hev1)
   * Support .eac3 audio input
