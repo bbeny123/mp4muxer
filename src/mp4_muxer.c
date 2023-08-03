@@ -1524,11 +1524,21 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
     SKIP_SIZE_FIELD(snk);
 
     if (
-        (track->parser->ext_timing.ext_dv_profile == 5)
+        (track->parser->ext_timing.ext_dv_profile == 1)    /** non-bc compatible dual layer dual track, BL and EL track case; */
+        || (track->parser->ext_timing.ext_dv_profile == 3) /** non-bc compatible dual layer dual track, BL and EL track case; */
+        || (track->parser->ext_timing.ext_dv_profile == 5)
         || ((track->parser->dv_rpu_nal_flag == 1) && (track->parser->dv_el_nal_flag == 0))  /** non-bc compatible single layer, single track; or dual layer dual track, EL track case; */
         )
     {
         dolby_vision_flag = 1;
+    }
+
+    if (
+        ((track->parser->ext_timing.ext_dv_profile == 8) || (track->parser->ext_timing.ext_dv_profile == 9)) 
+        && ( track->parser->ext_timing.ext_dv_bl_compatible_id != 0)
+        )
+    {
+        dolby_vision_flag = 0;
     }
 
     /** sample entry name */
