@@ -1348,15 +1348,7 @@ write_dsi_box(bbio_handle_t snk, track_handle_t track)
         if (track->parser->dv_dsi_size)
         {
             sink_write_u32(snk,track->parser->dv_dsi_size + 8);
-            if (track->parser->ext_timing.ext_dv_profile > 7)
-            {
-                sink_write_4CC(snk, "dvvC");
-            }
-            else
-            {
-                sink_write_4CC(snk, "dvcC");
-            }
-
+            sink_write_4CC(snk, "dvcC");
             snk->write(snk, (uint8_t *)track->parser->dv_dsi_buf, track->parser->dv_dsi_size);
             size += track->parser->dv_dsi_size + 8;
         }
