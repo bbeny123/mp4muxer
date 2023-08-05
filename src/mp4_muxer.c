@@ -1525,14 +1525,6 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
         dolby_vision_flag = 1;
     }
 
-    if (
-        ((track->parser->ext_timing.ext_dv_profile == 8) || (track->parser->ext_timing.ext_dv_profile == 9)) 
-        && ( track->parser->ext_timing.ext_dv_bl_compatible_id != 0)
-        )
-    {
-        dolby_vision_flag = 0;
-    }
-
     /** sample entry name */
     if(dolby_vision_flag && !track->encryptor)
     {
