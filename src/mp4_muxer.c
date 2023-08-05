@@ -1348,15 +1348,7 @@ write_dsi_box(bbio_handle_t snk, track_handle_t track)
         if (track->parser->dv_dsi_size)
         {
             sink_write_u32(snk,track->parser->dv_dsi_size + 8);
-            if (track->parser->ext_timing.ext_dv_profile > 7)
-            {
-                sink_write_4CC(snk, "dvvC");
-            }
-            else
-            {
-                sink_write_4CC(snk, "dvcC");
-            }
-
+            sink_write_4CC(snk, "dvcC");
             snk->write(snk, (uint8_t *)track->parser->dv_dsi_buf, track->parser->dv_dsi_size);
             size += track->parser->dv_dsi_size + 8;
         }
@@ -1524,7 +1516,9 @@ write_video_box(bbio_handle_t snk, track_handle_t track)
     SKIP_SIZE_FIELD(snk);
 
     if (
-        (track->parser->ext_timing.ext_dv_profile == 5)
+        (track->parser->ext_timing.ext_dv_profile == 1)    /** non-bc compatible dual layer dual track, BL and EL track case; */
+        || (track->parser->ext_timing.ext_dv_profile == 3) /** non-bc compatible dual layer dual track, BL and EL track case; */
+        || (track->parser->ext_timing.ext_dv_profile == 5)
         || ((track->parser->dv_rpu_nal_flag == 1) && (track->parser->dv_el_nal_flag == 0))  /** non-bc compatible single layer, single track; or dual layer dual track, EL track case; */
         )
     {
@@ -7512,7 +7506,7 @@ static const mp4base_version_info mp4base_lib_version =
     MP4BASE_V_API,  /** API */
     MP4BASE_V_FCT,  /** Functionality */
     MP4BASE_V_MTNC, /** Maintenance  */
-    "v1.3.1"
+    "v1.3.2"
 };
 
 const mp4base_version_info*
