@@ -1,3 +1,7 @@
+## v1.3.3:
+
+  * Lift DV profile restrictions for the '--dvh1flag {trackId}' flag
+
 ## v1.3.2:
 
   * Fix codec configuration box for DV profile > 7 (dvcC instead of dvvC)
